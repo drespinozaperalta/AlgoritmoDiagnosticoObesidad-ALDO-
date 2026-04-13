@@ -93,9 +93,7 @@
   <div class="container">
     <section class="hero">
       <h1>Algoritmo PRO de farmacoterapia para obesidad</h1>
-      <p>Herramienta de toma de decisiones integradas que combina: 📊 IMC y criterios de elegibilidad, 🧬 Fenotipos clínicos (cardiometabólico, respiratorio, hepático, hedónico),⚖️ EOSS para estratificar severidad real (no solo peso)
-😴 STOP-BANG y ESS para detectar riesgo oculto de Síndrome de Apnea Obstructiva del Sueño,🚦 Score combinado de prioridad terapéutica, que traduce datos en urgencia clínica
-</p>
+      <p>Versión expandida para GitHub Pages con cuestionarios guiados, fenotipo clínico sugerido, autocalculo orientativo de EOSS y ESS, score combinado de prioridad terapéutica, semáforos visuales, esquema de dosis y resumen exportable tipo nota médica.</p>
       <div class="badge-row">
         <span class="badge">IMC automático</span>
         <span class="badge">Fenotipo sugerido</span>
@@ -202,11 +200,17 @@
             <div class="metric"><div class="k">Riesgo SAOS</div><div class="v" id="saosMetric">Bajo</div></div>
             <div class="metric"><div class="k">Elegibilidad</div><div class="v" id="eligibilityMetric">Pendiente</div></div>
           </div>
+          <div class="metric-grid" style="margin-top:12px">
+            <div class="metric"><div class="k">Meta mínima 5%</div><div class="v" id="goal5Metric">--</div></div>
+            <div class="metric"><div class="k">Meta intermedia 10%</div><div class="v" id="goal10Metric">--</div></div>
+            <div class="metric"><div class="k">Meta intensiva 15%</div><div class="v" id="goal15Metric">--</div></div>
+            <div class="metric"><div class="k">Pérdida esperada</div><div class="v" id="expectedLossMetric">--</div></div>
+          </div>
           <div class="summary-box" style="margin-top:14px"><strong>Score combinado de prioridad terapéutica:</strong><div id="priorityLabel" style="margin-top:6px;font-weight:800;font-size:1.1rem">Pendiente</div><div class="progress-wrap"><div class="progress-bar" id="priorityBar"></div></div><div class="legend"><span><i class="dot green"></i> Verde = prioridad baja</span><span><i class="dot yellow"></i> Amarillo = prioridad intermedia</span><span><i class="dot red"></i> Rojo = prioridad alta</span></div><div class="small">Puntaje combinado = IMC + EOSS + SAOS. Es orientativo para priorizar intensidad y urgencia del manejo, no reemplaza juicio clínico.</div></div>
-          <div class="mode-switch no-print"><button class="mode-btn active doctor-red" id="doctorModeBtn">Modo médico (click para interpretar)</button><button class="mode-btn" id="patientModeBtn">Modo paciente</button></div>
+          <div class="mode-switch no-print"><button class="mode-btn active doctor-red" id="doctorModeBtn">Modo médico (click para interpretar)</button><button class="mode-btn" id="patientModeBtn">Modo paciente (Para explicar al paciente durante la consulta)</button></div>
           <div class="result" id="resultBox" style="margin-top:14px"><h3>Recomendación clínica</h3><p>Completa los datos y presiona <strong>Calcular recomendación</strong>.</p></div>
         </section>
-        <section class="card"><div class="section-title"><h2>Dosis automáticas orientativas</h2><p class="sub">Se muestran según el medicamento sugerido.</p></div><div id="doseBox"><div class="small">Todavía sin calcular.</div></div></section>
+        <section class="card"><div class="section-title"><h2>Dosis automáticas orientativas</h2><p class="sub">Se muestran según el medicamento sugerido.</p></div><div id="doseBox"><div class="small">Todavía sin calcular.</div></div><div class="summary-box" style="margin-top:12px"><strong>Metas dinámicas de pérdida de peso:</strong><div class="small">Se calculan automáticamente en kilos a partir del peso actual y ayudan a discutir objetivos realistas en consulta.</div></div></section>
         <section class="card"><div class="section-title"><h2>Resumen tipo nota médica exportable</h2><p class="sub">Se autogenera para copiar, pegar o imprimir.</p></div><textarea id="noteOutput" readonly placeholder="Aquí aparecerá el resumen clínico."></textarea><div class="toolbar no-print" style="margin-top:10px"><button class="secondary" id="copyNoteBtn">Copiar resumen</button></div></section>
         <section class="card"><div class="section-title"><h2>Guía rápida</h2><p class="sub">Atajo de bolsillo para no ir a pescar conceptos a mitad de consulta.</p></div><div class="table-wrap"><table><thead><tr><th>STOP-BANG</th><th>Riesgo</th><th>Acción sugerida</th></tr></thead><tbody><tr><td>0-2</td><td>Bajo</td><td>Continuar algoritmo estándar según fenotipo.</td></tr><tr><td>3-4</td><td>Intermedio</td><td>Considerar HSAT, oximetría o polisomnografía. Si se confirma Síndrome de Apnea Obstructiva del Sueño, preferir tirzepatide.</td></tr><tr><td>≥5</td><td>Alto</td><td>Derivación urgente a Neumología o Medicina del Sueño. Iniciar tratamiento del peso sin retrasar injustificadamente.</td></tr></tbody></table></div><div class="alert-box"><strong>Medicamento más claramente no recomendado en alto riesgo respiratorio:</strong><div class="small">Fentermina. En esta herramienta aparece como medicamento a evitar o contraindicado cuando el riesgo de Síndrome de Apnea Obstructiva del Sueño es alto.</div></div><div class="footnote">Herramienta de apoyo clínico. No sustituye guías locales, evaluación integral ni juicio médico.</div></section>
       </div>
@@ -216,7 +220,7 @@
   <script>
     let currentMode = 'doctor';
     const ids = {
-      edad: document.getElementById('edad'), sexo: document.getElementById('sexo'), peso: document.getElementById('peso'), talla: document.getElementById('talla'), imc: document.getElementById('imc'), cintura: document.getElementById('cintura'), cuello: document.getElementById('cuello'), hta: document.getElementById('hta'), comorb: document.getElementById('comorb'), ess: document.getElementById('ess'), eossManual: document.getElementById('eossManual'), eossAutoText: document.getElementById('eossAutoText'), phenotypeSuggestion: document.getElementById('phenotypeSuggestion'), imcMetric: document.getElementById('imcMetric'), sbMetric: document.getElementById('sbMetric'), saosMetric: document.getElementById('saosMetric'), eligibilityMetric: document.getElementById('eligibilityMetric'), priorityLabel: document.getElementById('priorityLabel'), priorityBar: document.getElementById('priorityBar'), resultBox: document.getElementById('resultBox'), doseBox: document.getElementById('doseBox'), noteOutput: document.getElementById('noteOutput')
+      edad: document.getElementById('edad'), sexo: document.getElementById('sexo'), peso: document.getElementById('peso'), talla: document.getElementById('talla'), imc: document.getElementById('imc'), cintura: document.getElementById('cintura'), cuello: document.getElementById('cuello'), hta: document.getElementById('hta'), comorb: document.getElementById('comorb'), ess: document.getElementById('ess'), eossManual: document.getElementById('eossManual'), eossAutoText: document.getElementById('eossAutoText'), phenotypeSuggestion: document.getElementById('phenotypeSuggestion'), imcMetric: document.getElementById('imcMetric'), sbMetric: document.getElementById('sbMetric'), saosMetric: document.getElementById('saosMetric'), eligibilityMetric: document.getElementById('eligibilityMetric'), goal5Metric: document.getElementById('goal5Metric'), goal10Metric: document.getElementById('goal10Metric'), goal15Metric: document.getElementById('goal15Metric'), expectedLossMetric: document.getElementById('expectedLossMetric'), priorityLabel: document.getElementById('priorityLabel'), priorityBar: document.getElementById('priorityBar'), resultBox: document.getElementById('resultBox'), doseBox: document.getElementById('doseBox'), noteOutput: document.getElementById('noteOutput')
     };
 
     function radioValue(name){ const el = document.querySelector(`input[name="${name}"]:checked`); return el ? Number(el.value) : 0; }
@@ -283,6 +287,75 @@
       return {total,level};
     }
 
+
+    function updateWeightGoals(){
+      const peso = Number(ids.peso.value);
+      if(!peso || peso <= 0){
+        ids.goal5Metric.textContent = '--';
+        ids.goal10Metric.textContent = '--';
+        ids.goal15Metric.textContent = '--';
+        return null;
+      }
+      const goal5 = peso * 0.95;
+      const goal10 = peso * 0.90;
+      const goal15 = peso * 0.85;
+      ids.goal5Metric.textContent = `${goal5.toFixed(1)} kg`;
+      ids.goal10Metric.textContent = `${goal10.toFixed(1)} kg`;
+      ids.goal15Metric.textContent = `${goal15.toFixed(1)} kg`;
+      return {peso, goal5, goal10, goal15};
+    }
+
+    function expectedLossInfo(drug, peso){
+      const ranges = {
+        'Orlistat': {min: 5, max: 8},
+        'Naltrexona/Bupropion': {min: 5, max: 8},
+        'Semaglutide': {min: 10, max: 15},
+        'Tirzepatide': {min: 15, max: 20}
+      };
+      if(!peso || !ranges[drug]){
+        ids.expectedLossMetric.textContent = '--';
+        return null;
+      }
+      const r = ranges[drug];
+      const minKg = peso * (r.min / 100);
+      const maxKg = peso * (r.max / 100);
+      ids.expectedLossMetric.textContent = `${r.min}-${r.max}%`;
+      return { ...r, minKg, maxKg };
+    }
+
+    function contraindicationsBox(drug){
+      const data = {
+        'Semaglutide': [
+          'Antecedente de carcinoma medular de tiroides',
+          'Síndrome MEN 2',
+          'Embarazo'
+        ],
+        'Tirzepatide': [
+          'Antecedente de carcinoma medular de tiroides',
+          'Síndrome MEN 2',
+          'Embarazo'
+        ],
+        'Naltrexona/Bupropion': [
+          'Trastorno convulsivo',
+          'Uso actual de opioides',
+          'Bulimia nervosa activa',
+          'Embarazo'
+        ],
+        'Orlistat': [
+          'Síndrome de mala absorción crónica',
+          'Colestasis'
+        ]
+      };
+      if(!data[drug]) return '';
+      return `
+        <div class="alert-box">
+          <strong>⚠️ Vigilar contraindicaciones absolutas del medicamento recomendado:</strong>
+          <ul class="compact">
+            ${data[drug].map(x => `<li>${x}</li>`).join('')}
+          </ul>
+        </div>`;
+    }
+
     function doseHtml(drug){
       const doses={
         'Semaglutide': '<div class="pill-row"><span class="pill">Esquema sugerido</span></div><ul><li>Semanas 1–4: 0.25 mg SC semanal</li><li>Semanas 5–8: 0.5 mg SC semanal</li><li>Semanas 9–12: 1.0 mg SC semanal</li><li>Semanas 13–16: 1.7 mg SC semanal</li><li>Semana 17 en adelante: 2.4 mg SC semanal</li></ul><p class="small">Escalar según tolerancia gastrointestinal.</p>',
@@ -302,6 +375,7 @@
       }
 
       const priority=computePriorityScore(imc,eoss,sb);
+      const goals = updateWeightGoals();
 
       if(imc >= 27 && imc < 30 && ids.comorb.value === 'no'){
         const txt=currentMode==='doctor'
@@ -392,6 +466,13 @@
           break;
       }
 
+      const primaryDrugForLoss = ['Semaglutide','Tirzepatide','Naltrexona/Bupropion','Orlistat'].includes(drug) ? drug : (effectivePhenotype==='6' ? 'Semaglutide' : null);
+      const lossInfo = expectedLossInfo(primaryDrugForLoss, peso);
+      if(lossInfo){
+        rationale.push(`Con ${primaryDrugForLoss}, la pérdida esperada suele rondar ${lossInfo.min}-${lossInfo.max}% del peso corporal, equivalente a aproximadamente ${lossInfo.minKg.toFixed(1)}-${lossInfo.maxKg.toFixed(1)} kg en este paciente.`);
+      } else {
+        ids.expectedLossMetric.textContent = '--';
+      }
       if(eoss==='3') rationale.push('EOSS 3: amerita pensar en manejo compartido o derivación por complejidad clínica.');
       if(ess!==null && ess>=11 && sb>=3) rationale.push(`ESS ${ess}: somnolencia diurna excesiva que refuerza la sospecha clínica de Síndrome de Apnea Obstructiva del Sueño.`);
       rationale.push('La obesidad es una enfermedad crónica, progresiva y multifactorial que requiere abordaje integral.');
@@ -403,9 +484,9 @@
 
       const pills=`<div class="pill-row"><span class="pill ${priority.level==='Rojo'?'danger':priority.level==='Amarillo'?'warn':'good'}">Prioridad ${priority.level}</span><span class="pill">Fenotipo: ${phenotypeLabel}</span><span class="pill">EOSS ${eoss}</span><span class="pill">STOP-BANG ${sb}</span><span class="pill">IMC ${imc.toFixed(1)}</span></div>`;
 
-      const doctorHtml=`<h3>Recomendación terapéutica</h3>${pills}<p><strong>Medicamento principal:</strong> ${drug}</p><p><strong>Alternativa razonable:</strong> ${alternative}</p><p><strong>Medicamento a evitar / contraindicado en este escenario:</strong> <span style="color:var(--danger);font-weight:800">${contraindicated}</span></p><p><strong>Acción sugerida:</strong> ${action}</p><p><strong>Justificación clínica:</strong></p><ul>${rationale.map(x=>`<li>${x}</li>`).join('')}</ul><p><strong>Seguimiento:</strong></p><ul>${followup.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+      const doctorHtml=`<h3>Recomendación terapéutica</h3>${pills}<p><strong>Medicamento principal:</strong> ${drug}</p><p><strong>Alternativa razonable:</strong> ${alternative}</p><p><strong>Medicamento a evitar / contraindicado en este escenario:</strong> <span style="color:var(--danger);font-weight:800">${contraindicated}</span></p><p><strong>Acción sugerida:</strong> ${action}</p><p><strong>Justificación clínica:</strong></p><ul>${rationale.map(x=>`<li>${x}</li>`).join('')}</ul>${contraindicationsBox(primaryDrugForLoss)}<p><strong>Seguimiento:</strong></p><ul>${followup.map(x=>`<li>${x}</li>`).join('')}</ul>`;
 
-      const patientHtml=`<h3>Resumen para paciente</h3>${pills}<p><strong>¿Qué significa esto?</strong></p><p>La obesidad es una enfermedad crónica, no solo un tema de peso. Involucra hormonas, metabolismo, cerebro y emociones.</p><p>El tratamiento puede incluir medicamentos, pero siempre debe acompañarse de:</p><ul><li>Plan de alimentación estructurado</li><li>Actividad física regular</li><li>Buen descanso</li><li>Cuidado de la salud mental</li></ul><p><strong>Tratamiento sugerido:</strong> ${drug}</p><p><strong>Medicamento que no sería buena idea en este caso:</strong> <span style="color:var(--danger);font-weight:800">${contraindicated}</span></p><p>${urgent ? 'También hay datos que sugieren un problema respiratorio durante el sueño, por lo que es importante una valoración especializada.' : 'El enfoque será integral, no solo farmacológico.'}</p>`;
+      const patientHtml=`<h3>Explicación para el paciente</h3>${pills}<p><strong>¿Qué está pasando?</strong></p><p>El peso no es solo una cuestión de voluntad. La obesidad es una enfermedad crónica que involucra hormonas, metabolismo, sueño, estrés y la manera en que el cuerpo maneja la energía.</p><p><strong>¿Por qué es importante bajar de peso?</strong></p><ul><li>Perder 5% del peso suele mejorar azúcar, presión y colesterol</li><li>Perder 10% puede mejorar hígado, energía y riesgo cardiovascular</li><li>Perder 15% o más puede dar beneficios metabólicos más profundos</li></ul><p><strong>Metas en kilos para este paciente:</strong></p><ul><li>Meta inicial 5%: ${goals ? goals.goal5.toFixed(1) : '--'} kg</li><li>Meta intermedia 10%: ${goals ? goals.goal10.toFixed(1) : '--'} kg</li><li>Meta intensiva 15%: ${goals ? goals.goal15.toFixed(1) : '--'} kg</li></ul><p><strong>¿Qué vamos a hacer?</strong></p><ul><li>Trabajar un plan de alimentación estructurado</li><li>Incluir actividad física progresiva y sostenible</li><li>Mejorar sueño y descanso</li><li>Revisar el impacto de la salud mental, ansiedad, estrés o atracones</li><li>Dar seguimiento médico estructurado cada 4 a 12 semanas</li></ul><p><strong>Tratamiento sugerido:</strong> ${drug}</p><p><strong>Importante:</strong></p><ul><li>El medicamento ayuda, pero no sustituye el plan de tratamiento</li><li>Las metas cambian según el tipo de obesidad o los problemas de salud asociados</li><li>El seguimiento es clave para ajustar metas, revisar tolerancia y medir avances reales</li></ul><p>${urgent ? 'También hay datos que sugieren un problema en la respiración durante el sueño, por lo que es importante valorarlo con un especialista.' : 'El objetivo es mejorar salud, energía y control metabólico con un enfoque integral.'}</p>`;
 
       ids.resultBox.innerHTML = currentMode==='doctor' ? doctorHtml : patientHtml;
       ids.doseBox.innerHTML = currentMode==='doctor' ? doseHtml(drug) : '<div class="small">En modo paciente no se muestran dosis ni escalamiento para mantener el resumen claro y enfocado en educación.</div>';
@@ -422,7 +503,23 @@ Tratamiento sugerido: ${drug}.
 Alternativa: ${alternative}.
 Medicamento a evitar / contraindicado en este contexto: ${contraindicated}.
 Plan orientativo: ${action}
-Seguimiento sugerido: ${followup.join(' ')}`;
+Metas dinámicas de peso: 5% = ${goals ? goals.goal5.toFixed(1) : '--'} kg; 10% = ${goals ? goals.goal10.toFixed(1) : '--'} kg; 15% = ${goals ? goals.goal15.toFixed(1) : '--'} kg.\nPérdida esperada por fármaco principal: ${lossInfo ? `${lossInfo.min}-${lossInfo.max}% (${lossInfo.minKg.toFixed(1)}-${lossInfo.maxKg.toFixed(1)} kg)` : 'no estimable en este escenario'}.\nSeguimiento sugerido: ${followup.join(' ')}`;
+      if(currentMode==='patient'){
+        ids.noteOutput.value += `
+
+Explicación para paciente:
+Su peso actual está afectando su salud, pero esto tiene tratamiento.
+Metas de tratamiento:
+- Meta inicial: perder al menos 5% del peso
+- Meta intermedia: acercarse a 10%
+- Meta intensiva: 15% o más si es posible y seguro
+Metas dinámicas en este caso:
+- 5%: ${goals ? goals.goal5.toFixed(1) : '--'} kg
+- 10%: ${goals ? goals.goal10.toFixed(1) : '--'} kg
+- 15%: ${goals ? goals.goal15.toFixed(1) : '--'} kg
+Esto se logra con alimentación estructurada, ejercicio progresivo, buen sueño, revisión de salud mental y seguimiento médico ordenado.`;
+      }
+
     }
 
     function resetAll(){
@@ -435,6 +532,10 @@ Seguimiento sugerido: ${followup.join(' ')}`;
       ids.saosMetric.textContent='Bajo';
       ids.saosMetric.style.color='var(--ok)';
       ids.eligibilityMetric.textContent='Pendiente';
+      ids.goal5Metric.textContent='--';
+      ids.goal10Metric.textContent='--';
+      ids.goal15Metric.textContent='--';
+      ids.expectedLossMetric.textContent='--';
       ids.eligibilityMetric.style.color='var(--primary-dark)';
       ids.phenotypeSuggestion.textContent='Pendiente';
       ids.eossAutoText.value='';
@@ -456,7 +557,7 @@ Seguimiento sugerido: ${followup.join(' ')}`;
       calculateImc(); suggestPhenotype(); suggestEoss(); buildRecommendation();
     }
 
-    function recalcLite(){ calculateImc(); suggestPhenotype(); suggestEoss(); computeStopBang(); computeEligibility(); }
+    function recalcLite(){ calculateImc(); suggestPhenotype(); suggestEoss(); computeStopBang(); computeEligibility(); updateWeightGoals(); }
 
     document.getElementById('calculateBtn').addEventListener('click',()=>{ recalcLite(); buildRecommendation(); });
     document.getElementById('fillDemoBtn').addEventListener('click',fillDemo);

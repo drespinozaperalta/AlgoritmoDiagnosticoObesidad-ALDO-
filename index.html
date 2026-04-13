@@ -68,6 +68,7 @@
     .ghost{background:#fff;border:1px solid var(--border);color:var(--text)}
     .mode-btn.active{background:var(--primary-dark);color:#fff}
     .mode-btn:not(.active){background:#eef3f9;color:var(--primary-dark)}
+    .doctor-red{background:#e6553f !important;color:#fff !important}
     .result{border:1px solid var(--border);border-radius:18px;padding:18px;background:linear-gradient(180deg,#fff,#f8fbff)}
     .result p,.result li{line-height:1.55}
     .summary-box{border-left:5px solid var(--primary);background:#f4f8ff;padding:14px 16px;border-radius:14px;margin-top:12px}
@@ -83,6 +84,7 @@
     .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
     .dot.green{background:var(--ok)} .dot.yellow{background:var(--warn)} .dot.red{background:var(--danger)}
     .footnote{color:var(--muted);font-size:.86rem;line-height:1.45;margin-top:14px}
+    ul.compact{margin:8px 0 0 18px;padding:0}
     @media print{body{background:#fff}.hero,.toolbar,.mode-switch,.no-print{display:none !important}.container{width:100%;padding:0}.card,.result{box-shadow:none;border:1px solid #bbb}.layout{display:block}}
     @media (max-width:1080px){.layout,.grid-2,.grid-3,.grid-4,.metric-grid{grid-template-columns:1fr}.container{width:min(100% - 20px,1280px)}}
   </style>
@@ -91,7 +93,24 @@
   <div class="container">
     <section class="hero">
       <h1>Algoritmo PRO de farmacoterapia para obesidad</h1>
-      <p>Versión expandida para GitHub Pages con cuestionarios guiados, fenotipo clínico sugerido, autocalculo orientativo de EOSS y ESS, score combinado de prioridad terapéutica, semáforos visuales, esquema de dosis y resumen exportable tipo nota médica.</p>
+      <p>Versió🧠 ¿Qué aporta este algoritmo?
+
+En la práctica real, tratar la obesidad no es elegir un fármaco… es navegar un sistema complejo donde metabolismo, conducta, comorbilidades y riesgo futuro se entrelazan como cables detrás de un quirófano.
+
+Este algoritmo convierte ese caos en una ruta clínica estructurada, reproducible y accionable.
+
+No es una simple calculadora. Es una herramienta de toma de decisiones integradas que combina:
+
+📊 IMC y criterios de elegibilidad
+🧬 Fenotipos clínicos (cardiometabólico, respiratorio, hepático, hedónico)
+⚖️ EOSS para estratificar severidad real (no solo peso)
+😴 STOP-BANG y ESS para detectar riesgo oculto de Síndrome de Apnea Obstructiva del Sueño
+🚦 Score combinado de prioridad terapéutica, que traduce datos en urgencia clínica
+
+El resultado:
+👉 una recomendación terapéutica clara,
+👉 con medicamento sugerido, alternativa y contraindicación,
+👉 acompañada de lógica clínica explícita (no caja negra).</p>
       <div class="badge-row">
         <span class="badge">IMC automático</span>
         <span class="badge">Fenotipo sugerido</span>
@@ -141,9 +160,23 @@
           <div class="q"><div class="q-title"><div class="q-icon">2</div><div><strong>Enfermedad cardiovascular establecida</strong><div class="small">Infarto, ictus, angina, aterosclerosis conocida o insuficiencia cardiaca.</div></div></div><div class="yesno"><label><input type="radio" name="phen2" value="1">Sí</label><label><input type="radio" name="phen2" value="0" checked>No</label></div></div>
           <div class="q"><div class="q-title"><div class="q-icon">3</div><div><strong>Disfunción hepática / MASLD</strong><div class="small">Elevación persistente de ALT/AST, hígado graso por imagen o sospecha de MASH/fibrosis.</div></div></div><div class="yesno"><label><input type="radio" name="phen3" value="1">Sí</label><label><input type="radio" name="phen3" value="0" checked>No</label></div></div>
           <div class="q"><div class="q-title"><div class="q-icon">4</div><div><strong>Síndrome de Apnea Obstructiva del Sueño / respiratorio</strong><div class="small">Ronquidos prominentes, somnolencia, pausas respiratorias, hipoxemia nocturna o STOP-BANG elevado.</div></div></div><div class="yesno"><label><input type="radio" name="phen4" value="1">Sí</label><label><input type="radio" name="phen4" value="0" checked>No</label></div></div>
-          <div class="q"><div class="q-title"><div class="q-icon">5</div><div><strong>Conducta alimentaria disfuncional</strong><div class="small">Atracones, comer emocional, craving intenso o relación hedónica problemática con la comida.</div></div></div><div class="yesno"><label><input type="radio" name="phen5" value="1">Sí</label><label><input type="radio" name="phen5" value="0" checked>No</label></div></div>
+          <div class="q">
+            <div class="q-title"><div class="q-icon">5</div><div><strong>Fenotipo hedónico / conducta alimentaria disfuncional</strong><div class="small">Atracones, comer emocional, craving intenso o relación hedónica problemática con la comida.</div></div></div>
+            <div class="yesno"><label><input type="radio" name="phen5" value="1">Sí</label><label><input type="radio" name="phen5" value="0" checked>No</label></div>
+            <div class="summary-box">
+              <strong>Criterios DSM-5 orientativos para trastorno por atracón:</strong>
+              <ul class="compact small">
+                <li>Episodios recurrentes de ingesta excesiva con sensación de pérdida de control</li>
+                <li>Frecuencia de al menos 1 vez por semana durante 3 meses</li>
+                <li>Se asocia a comer rápido, sin hambre, hasta incomodidad o con culpa posterior</li>
+                <li>No hay conductas compensatorias regulares</li>
+              </ul>
+              <strong>Cuestionario HAT orientativo:</strong>
+              <div class="small">Si hay craving intenso, ingesta emocional o pérdida de control, aumenta la probabilidad de fenotipo hedónico.</div>
+            </div>
+          </div>
 
-          <div class="summary-box"><strong>Fenotipo sugerido:</strong> <span id="phenotypeSuggestion">Pendiente</span><div class="small">Jerarquía aplicada si marcas varios: ECV > SAOS > MASLD > conducta alimentaria > cardiometabólico > obesidad “pura”.</div></div>
+          <div class="summary-box"><strong>Fenotipo sugerido:</strong> <span id="phenotypeSuggestion">Pendiente</span><div class="small">Jerarquía aplicada si marcas varios: ECV > SAOS > MASLD > hedónico > cardiometabólico > obesidad “pura”.</div></div>
         </section>
 
         <section class="card">
@@ -185,7 +218,7 @@
             <div class="metric"><div class="k">Elegibilidad</div><div class="v" id="eligibilityMetric">Pendiente</div></div>
           </div>
           <div class="summary-box" style="margin-top:14px"><strong>Score combinado de prioridad terapéutica:</strong><div id="priorityLabel" style="margin-top:6px;font-weight:800;font-size:1.1rem">Pendiente</div><div class="progress-wrap"><div class="progress-bar" id="priorityBar"></div></div><div class="legend"><span><i class="dot green"></i> Verde = prioridad baja</span><span><i class="dot yellow"></i> Amarillo = prioridad intermedia</span><span><i class="dot red"></i> Rojo = prioridad alta</span></div><div class="small">Puntaje combinado = IMC + EOSS + SAOS. Es orientativo para priorizar intensidad y urgencia del manejo, no reemplaza juicio clínico.</div></div>
-          <div class="mode-switch no-print"><button class="mode-btn active" id="doctorModeBtn">Modo médico</button><button class="mode-btn" id="patientModeBtn">Modo paciente</button></div>
+          <div class="mode-switch no-print"><button class="mode-btn active doctor-red" id="doctorModeBtn">Modo médico (click para interpretar)</button><button class="mode-btn" id="patientModeBtn">Modo paciente</button></div>
           <div class="result" id="resultBox" style="margin-top:14px"><h3>Recomendación clínica</h3><p>Completa los datos y presiona <strong>Calcular recomendación</strong>.</p></div>
         </section>
         <section class="card"><div class="section-title"><h2>Dosis automáticas orientativas</h2><p class="sub">Se muestran según el medicamento sugerido.</p></div><div id="doseBox"><div class="small">Todavía sin calcular.</div></div></section>
@@ -200,32 +233,257 @@
     const ids = {
       edad: document.getElementById('edad'), sexo: document.getElementById('sexo'), peso: document.getElementById('peso'), talla: document.getElementById('talla'), imc: document.getElementById('imc'), cintura: document.getElementById('cintura'), cuello: document.getElementById('cuello'), hta: document.getElementById('hta'), comorb: document.getElementById('comorb'), ess: document.getElementById('ess'), eossManual: document.getElementById('eossManual'), eossAutoText: document.getElementById('eossAutoText'), phenotypeSuggestion: document.getElementById('phenotypeSuggestion'), imcMetric: document.getElementById('imcMetric'), sbMetric: document.getElementById('sbMetric'), saosMetric: document.getElementById('saosMetric'), eligibilityMetric: document.getElementById('eligibilityMetric'), priorityLabel: document.getElementById('priorityLabel'), priorityBar: document.getElementById('priorityBar'), resultBox: document.getElementById('resultBox'), doseBox: document.getElementById('doseBox'), noteOutput: document.getElementById('noteOutput')
     };
+
     function radioValue(name){ const el = document.querySelector(`input[name="${name}"]:checked`); return el ? Number(el.value) : 0; }
     function setRadio(name, value){ const el = document.querySelector(`input[name="${name}"][value="${value}"]`); if(el) el.checked = true; }
     function calculateImc(){ const p = Number(ids.peso.value), t = Number(ids.talla.value); let imc = 0; if(p > 0 && t > 0) imc = p/(t*t); ids.imc.value = imc ? imc.toFixed(1) : ''; ids.imcMetric.textContent = imc ? imc.toFixed(1) : '0.0'; return imc; }
-    function suggestPhenotype(){ const p1=radioValue('phen1'), p2=radioValue('phen2'), p3=radioValue('phen3'), p4=radioValue('phen4'), p5=radioValue('phen5'); let code='6', label='Fenotipo 6 - Obesidad “pura”'; if(p1){code='1';label='Fenotipo 1 - Cardiometabólico'} if(p5){code='5';label='Fenotipo 5 - Conducta alimentaria disfuncional'} if(p3){code='3';label='Fenotipo 3 - MASLD / disfunción hepática'} if(p4){code='4';label='Fenotipo 4 - Síndrome de Apnea Obstructiva del Sueño / respiratorio'} if(p2){code='2';label='Fenotipo 2 - Enfermedad cardiovascular establecida'} ids.phenotypeSuggestion.textContent = label; return {code,label}; }
-    function suggestEoss(){ const selected=document.querySelector('input[name="eossq"]:checked'); if(selected){ ids.eossManual.value = selected.value; } const map={'0':'0 - Sin problemas clínicos relevantes','1':'1 - Riesgo o afectación leve','2':'2 - Enfermedad establecida','3':'3 - Complicación o limitación severa'}; ids.eossAutoText.value = ids.eossManual.value ? map[ids.eossManual.value] : ''; return ids.eossManual.value; }
-    function computeStopBang(){ const base=radioValue('q1')+radioValue('q2')+radioValue('q3')+radioValue('q4'); const edad=Number(ids.edad.value), imc=Number(ids.imc.value), sexo=ids.sexo.value, cuello=Number(ids.cuello.value); let extras=0; if(imc>30) extras+=1; if(edad>50) extras+=1; if((sexo==='m'&&cuello>40)||(sexo==='f'&&cuello>35)) extras+=1; if(sexo==='m') extras+=1; const score=base+extras; ids.sbMetric.textContent=String(score); if(score<=2){ ids.saosMetric.textContent='Bajo'; ids.saosMetric.style.color='var(--ok)'; } else if(score<=4){ ids.saosMetric.textContent='Intermedio'; ids.saosMetric.style.color='var(--warn)'; } else { ids.saosMetric.textContent='Alto'; ids.saosMetric.style.color='var(--danger)'; } return score; }
-    function computeEligibility(){ const imc=Number(ids.imc.value); const eligible = imc>=30 || (imc>=27 && ids.comorb.value==='si'); ids.eligibilityMetric.textContent = eligible ? 'Elegible' : 'No elegible'; ids.eligibilityMetric.style.color = eligible ? 'var(--ok)' : 'var(--danger)'; return eligible; }
-    function computePriorityScore(imc,eoss,sb){ let imcPoints=0; if(imc>=40) imcPoints=3; else if(imc>=35) imcPoints=2; else if(imc>=30) imcPoints=1; else if(imc>=27) imcPoints=.5; let eossPoints=Number(eoss||0); let saosPoints= sb>=5 ? 3 : sb>=3 ? 2 : 1; const total=imcPoints+eossPoints+saosPoints; let level='Verde', color='var(--ok)', width=Math.min((total/9)*100,100); if(total>=6){ level='Rojo'; color='var(--danger)'; } else if(total>=3.5){ level='Amarillo'; color='var(--warn)'; } ids.priorityLabel.textContent=`${level} · ${total.toFixed(1)} / 9`; ids.priorityLabel.style.color=color; ids.priorityBar.style.width=`${width}%`; ids.priorityBar.style.background = level==='Rojo' ? 'linear-gradient(90deg,#e6553f,#ff7a66)' : level==='Amarillo' ? 'linear-gradient(90deg,#e1a400,#f3c43c)' : 'linear-gradient(90deg,#1f8a4c,#4ab36d)'; return {total,level}; }
-    function doseHtml(drug){ const doses={ 'Semaglutide':'<div class="pill-row"><span class="pill">Esquema sugerido</span></div><ul><li>Semanas 1-4: 0.25 mg SC semanal</li><li>Semanas 5-8: 0.5 mg SC semanal</li><li>Semanas 9-12: 1.0 mg SC semanal</li><li>Mantenimiento: 2.4 mg SC semanal</li></ul><p class="small">Escalar según tolerancia gastrointestinal.</p>', 'Tirzepatide':'<div class="pill-row"><span class="pill">Esquema sugerido</span></div><ul><li>Semanas 1-4: 2.5 mg SC semanal</li><li>Semanas 5-8: 5 mg SC semanal</li><li>Semanas 9-12: 10 mg SC semanal</li><li>Mantenimiento: hasta 15 mg SC semanal</li></ul><p class="small">En pacientes frágiles o con mucha intolerancia GI, la escalada puede ser más lenta.</p>', 'Naltrexona/Bupropion':'<div class="pill-row"><span class="pill">Esquema sugerido</span></div><ul><li>Semana 1: 1 tableta al día</li><li>Semana 2: 1 tableta dos veces al día</li><li>Semana 3: 2 tabletas en la mañana y 1 en la tarde</li><li>Semana 4 en adelante: 2 tabletas dos veces al día</li></ul><p class="small">Evitar en antecedente de convulsiones.</p>', 'Orlistat':'<div class="pill-row"><span class="pill">Esquema sugerido</span></div><ul><li>120 mg VO con cada comida principal</li><li>Máximo: 360 mg al día</li></ul><p class="small">Advertir efectos gastrointestinales y valorar vitaminas liposolubles si se usa a largo plazo.</p>' }; return doses[drug] || '<div class="small">No hay dosis automática para este escenario porque todavía no se ha definido el medicamento principal.</div>'; }
-    function buildRecommendation(){ const edad=Number(ids.edad.value), peso=Number(ids.peso.value), talla=Number(ids.talla.value), imc=Number(ids.imc.value), eoss=suggestEoss(), sb=computeStopBang(), ess=ids.ess.value===''?null:Number(ids.ess.value), eligible=computeEligibility(), phenotype=suggestPhenotype(); if(!edad||!peso||!talla||!imc||eoss===''){ ids.resultBox.innerHTML='<h3>Faltan datos</h3><p>Completa al menos edad, peso, talla y EOSS final. Sin esos datos la máquina clínica tose humo.</p>'; return; } const priority=computePriorityScore(imc,eoss,sb); if(!eligible){ const txt=currentMode==='doctor' ? 'El paciente no cumple criterios estándar para farmacoterapia con la información capturada. Priorizar intervención intensiva sobre estilo de vida, reevaluación clínica y seguimiento de comorbilidades.' : 'Con los datos actuales, no parece necesario iniciar medicamento para peso de entrada. La prioridad sería trabajar alimentación, actividad física y seguimiento médico.'; ids.resultBox.innerHTML=`<h3>No elegible para farmacoterapia</h3><div class="pill-row"><span class="pill warn">IMC ${imc.toFixed(1)}</span><span class="pill warn">STOP-BANG ${sb}</span><span class="pill warn">EOSS ${eoss}</span></div><p>${txt}</p>`; ids.doseBox.innerHTML='<div class="small">Sin esquema de dosis porque no hay indicación farmacológica inicial.</div>'; ids.noteOutput.value=`Nota clínica resumida:\nPaciente con IMC ${imc.toFixed(1)} kg/m², EOSS ${eoss}, STOP-BANG ${sb}. No cumple criterios estándar de elegibilidad farmacológica según datos capturados. Se sugiere intervención intensiva en estilo de vida y reevaluación clínica.`; return; }
-      let drug='', alternative='', contraindicated='', action='', rationale=[], followup=[], urgent=false, phenotypeLabel=phenotype.label, effectivePhenotype=phenotype.code; if(effectivePhenotype==='6' && sb>=3){ effectivePhenotype='4'; phenotypeLabel='Fenotipo 4 - Reclasificado por sospecha respiratoria'; rationale.push('Fenotipo 6 reclasificado a fenotipo respiratorio por STOP-BANG ≥3.'); }
-      switch(effectivePhenotype){ case '1': if(sb>=3){ drug='Tirzepatide'; alternative='Semaglutide'; contraindicated= sb>=5 ? 'Fentermina' : 'Fentermina si predomina alto riesgo respiratorio'; action= sb>=5 ? 'Derivar de forma urgente a Neumología o Medicina del Sueño. Considerar polisomnografía y CPAP. Iniciar tirzepatide sin retrasar innecesariamente el tratamiento del peso.' : 'Solicitar estudio de sueño domiciliario o polisomnografía según contexto. Si se confirma Síndrome de Apnea Obstructiva del Sueño, mantener preferencia por tirzepatide.'; rationale.push('Combina beneficio cardiometabólico y una mejor perspectiva para el componente respiratorio.'); } else { drug='Tirzepatide'; alternative='Semaglutide'; contraindicated='Sin contraindicación principal específica por fenotipo'; action='Iniciar farmacoterapia con seguimiento cardiometabólico habitual.'; rationale.push('Mayor eficacia esperada en pérdida de peso y control glucometabólico.'); } if(sb>=5) urgent=true; break; case '2': drug='Semaglutide'; alternative='Tirzepatide'; contraindicated='No hay contraindicación absoluta específica por fenotipo, pero semaglutide es preferente'; action= sb>=5 ? 'Mantener prioridad cardiovascular con semaglutide y derivar de forma urgente a Neumología o Medicina del Sueño por alto riesgo de Síndrome de Apnea Obstructiva del Sueño.' : 'Iniciar semaglutide por preferencia de evidencia cardiovascular. Si hay sospecha respiratoria, complementar estudio de sueño.'; rationale.push('En enfermedad cardiovascular establecida, semaglutide conserva prioridad terapéutica por respaldo cardiovascular más sólido.'); if(sb>=5) urgent=true; break; case '3': drug='Tirzepatide'; alternative='Semaglutide'; contraindicated= sb>=5 ? 'Fentermina' : 'Sin contraindicación dominante específica'; action= sb>=5 ? 'Derivar por alto riesgo respiratorio. Tirzepatide puede iniciarse mientras se organiza estudio del sueño.' : 'Iniciar tirzepatide y vigilar evolución hepática, peso y tolerancia.'; rationale.push('Atractivo clínico por beneficio dual en peso y perfil hepático.'); if(sb>=5) urgent=true; break; case '4': if(sb<=2){ drug='Semaglutide'; alternative='Tirzepatide'; contraindicated='Fentermina si hay síntomas respiratorios importantes o sospecha de descompensación'; action='Con STOP-BANG bajo, el componente respiratorio clínicamente relevante es menos probable. Se puede iniciar manejo estándar del peso y reevaluar síntomas.'; rationale.push('Semaglutide es razonable cuando la sospecha respiratoria no es alta.'); } else if(sb<=4){ drug='Semaglutide'; alternative='Tirzepatide si se confirma Síndrome de Apnea Obstructiva del Sueño'; contraindicated='Fentermina no ideal si la sospecha respiratoria aumenta'; action='Solicitar HSAT, oximetría o polisomnografía. Mientras se investiga, puede iniciarse semaglutide. Si se confirma Síndrome de Apnea Obstructiva del Sueño clínicamente relevante, escalar a tirzepatide.'; rationale.push('Escenario puente mientras se confirma el diagnóstico respiratorio.'); } else { drug='Tirzepatide'; alternative='Semaglutide'; contraindicated='Fentermina'; action='Derivación urgente a Neumología o Medicina del Sueño. Considerar polisomnografía y CPAP. Iniciar tirzepatide como estrategia prioritaria de pérdida de peso.'; rationale.push('Alto riesgo respiratorio: se prioriza un fármaco con mejor expectativa sobre SAOS y se evita el simpaticomimético.'); urgent=true; } break; case '5': if(sb>=5){ drug='Tirzepatide'; alternative='Naltrexona/Bupropion'; contraindicated='Fentermina'; action='El riesgo respiratorio alto domina la escena clínica. Derivar urgente y priorizar tirzepatide.'; rationale.push('Cuando SAOS es de alto riesgo, el fenotipo conductual deja de ser el actor principal.'); urgent=true; } else { drug='Naltrexona/Bupropion'; alternative='Semaglutide'; contraindicated='Naltrexona/Bupropion en antecedente de convulsiones'; action= sb>=3 ? 'Investigar Síndrome de Apnea Obstructiva del Sueño y, si se confirma con mayor gravedad, reconsiderar tirzepatide.' : 'Iniciar manejo orientado a craving y conducta alimentaria, idealmente con apoyo psicológico o psiquiátrico si se requiere.'; rationale.push('Fenotipo especialmente útil para un enfoque sobre circuitos hedónicos y atracones.'); } break; case '6': drug='Semaglutide'; alternative='Orlistat'; contraindicated='Sin contraindicación principal específica por fenotipo'; action='Manejo estándar con estilo de vida y seguimiento estrecho de respuesta ponderal.'; rationale.push('Opción razonable para obesidad sin comorbilidades predominantes.'); break; }
-      if(eoss==='3') rationale.push('EOSS 3: amerita pensar en manejo compartido o derivación por complejidad clínica.'); if(ess!==null && ess>=11 && sb>=3) rationale.push(`ESS ${ess}: somnolencia diurna excesiva que refuerza la sospecha clínica de Síndrome de Apnea Obstructiva del Sueño.`); followup.push('Revalorar peso, tolerancia y eventos adversos cada 4 semanas durante titulación.'); followup.push('A las 12 semanas, buscar al menos 5% de pérdida de peso para considerar respuesta adecuada.'); if(sb>=3) followup.push('Monitorear síntomas respiratorios y repetir ESS si aplica.'); if(urgent) followup.push('Coordinar estudio de sueño y eventual CPAP con Neumología o Medicina del Sueño.'); const pills=`<div class="pill-row"><span class="pill ${priority.level==='Rojo'?'danger':priority.level==='Amarillo'?'warn':'good'}">Prioridad ${priority.level}</span><span class="pill">Fenotipo: ${phenotypeLabel}</span><span class="pill">EOSS ${eoss}</span><span class="pill">STOP-BANG ${sb}</span><span class="pill">IMC ${imc.toFixed(1)}</span></div>`; const doctorHtml=`<h3>Recomendación terapéutica</h3>${pills}<p><strong>Medicamento principal:</strong> ${drug}</p><p><strong>Alternativa razonable:</strong> ${alternative}</p><p><strong>Medicamento a evitar / contraindicado en este escenario:</strong> <span style="color:var(--danger);font-weight:800">${contraindicated}</span></p><p><strong>Acción sugerida:</strong> ${action}</p><p><strong>Justificación clínica:</strong></p><ul>${rationale.map(x=>`<li>${x}</li>`).join('')}</ul><p><strong>Seguimiento:</strong></p><ul>${followup.map(x=>`<li>${x}</li>`).join('')}</ul>`; const patientHtml=`<h3>Resumen para paciente</h3>${pills}<p><strong>Tratamiento que parece más adecuado:</strong> ${drug}</p><p><strong>Medicamento que no sería buena idea en este caso:</strong> <span style="color:var(--danger);font-weight:800">${contraindicated}</span></p><p><strong>Qué significa esto:</strong> Tu perfil sugiere que el manejo del peso debe enfocarse en ${drug}. ${urgent ? 'Además, hay señales de alerta para un posible problema respiratorio durante el sueño y conviene valoración especializada.' : 'No todo depende del medicamento: también importan la alimentación, actividad física y seguimiento médico.'}</p>`; ids.resultBox.innerHTML = currentMode==='doctor' ? doctorHtml : patientHtml; ids.doseBox.innerHTML = doseHtml(drug); ids.noteOutput.value=`Nota médica resumida\nPaciente de ${edad} años, sexo ${ids.sexo.value==='m'?'masculino':'femenino'}, peso ${peso.toFixed(1)} kg, talla ${talla.toFixed(2)} m, IMC ${imc.toFixed(1)} kg/m².\nElegibilidad farmacológica: ${eligible ? 'sí' : 'no'}.\nFenotipo sugerido: ${phenotypeLabel}.\nEOSS: ${eoss}.\nSTOP-BANG: ${sb} (${ids.saosMetric.textContent}).\nESS: ${ess===null ? 'no capturado' : ess}.\nScore combinado de prioridad: ${priority.total.toFixed(1)} (${priority.level}).\nTratamiento sugerido: ${drug}.\nAlternativa: ${alternative}.\nMedicamento a evitar / contraindicado en este contexto: ${contraindicated}.\nPlan orientativo: ${action}\nSeguimiento sugerido: ${followup.join(' ')}`; }
-    function resetAll(){ document.querySelectorAll('input[type="number"]').forEach(el=>el.value=''); document.querySelectorAll('select').forEach(el=>{ if(el.id==='sexo') el.value='m'; else if(el.id==='hta') el.value='no'; else if(el.id==='comorb') el.value='si'; else el.selectedIndex=0; }); document.querySelectorAll('input[type="radio"]').forEach(r=>{ if(r.value==='0') r.checked=true; else r.checked=false; }); document.querySelectorAll('input[name="eossq"]').forEach(r=>r.checked=false); ids.imcMetric.textContent='0.0'; ids.sbMetric.textContent='0'; ids.saosMetric.textContent='Bajo'; ids.saosMetric.style.color='var(--ok)'; ids.eligibilityMetric.textContent='Pendiente'; ids.eligibilityMetric.style.color='var(--primary-dark)'; ids.phenotypeSuggestion.textContent='Pendiente'; ids.eossAutoText.value=''; ids.priorityLabel.textContent='Pendiente'; ids.priorityLabel.style.color='var(--primary-dark)'; ids.priorityBar.style.width='0%'; ids.priorityBar.style.background='linear-gradient(90deg,var(--ok),#4ab36d)'; ids.resultBox.innerHTML='<h3>Recomendación clínica</h3><p>Completa los datos y presiona <strong>Calcular recomendación</strong>.</p>'; ids.doseBox.innerHTML='<div class="small">Todavía sin calcular.</div>'; ids.noteOutput.value=''; ids.imc.value=''; }
-    function fillDemo(){ ids.edad.value=56; ids.sexo.value='m'; ids.peso.value=112; ids.talla.value=1.72; ids.cintura.value=118; ids.cuello.value=43; ids.hta.value='si'; ids.comorb.value='si'; ids.ess.value=13; setRadio('phen1',1); setRadio('phen2',0); setRadio('phen3',0); setRadio('phen4',1); setRadio('phen5',0); setRadio('q1',1); setRadio('q2',1); setRadio('q3',1); setRadio('q4',1); const e2=document.querySelector('input[name="eossq"][value="2"]'); if(e2) e2.checked=true; ids.eossManual.value='2'; calculateImc(); suggestPhenotype(); suggestEoss(); buildRecommendation(); }
+
+    function suggestPhenotype(){
+      const p1=radioValue('phen1'), p2=radioValue('phen2'), p3=radioValue('phen3'), p4=radioValue('phen4'), p5=radioValue('phen5');
+      let code='6', label='Fenotipo 6 - Obesidad “pura”';
+      if(p1){code='1';label='Fenotipo 1 - Cardiometabólico'}
+      if(p5){code='5';label='Fenotipo 5 - Fenotipo hedónico / conducta alimentaria disfuncional'}
+      if(p3){code='3';label='Fenotipo 3 - MASLD / disfunción hepática'}
+      if(p4){code='4';label='Fenotipo 4 - Síndrome de Apnea Obstructiva del Sueño / respiratorio'}
+      if(p2){code='2';label='Fenotipo 2 - Enfermedad cardiovascular establecida'}
+      ids.phenotypeSuggestion.textContent = label;
+      return {code,label};
+    }
+
+    function suggestEoss(){
+      const selected=document.querySelector('input[name="eossq"]:checked');
+      if(selected){ ids.eossManual.value = selected.value; }
+      const map={'0':'0 - Sin problemas clínicos relevantes','1':'1 - Riesgo o afectación leve','2':'2 - Enfermedad establecida','3':'3 - Complicación o limitación severa'};
+      ids.eossAutoText.value = ids.eossManual.value ? map[ids.eossManual.value] : '';
+      return ids.eossManual.value;
+    }
+
+    function computeStopBang(){
+      const base=radioValue('q1')+radioValue('q2')+radioValue('q3')+radioValue('q4');
+      const edad=Number(ids.edad.value), imc=Number(ids.imc.value), sexo=ids.sexo.value, cuello=Number(ids.cuello.value);
+      let extras=0;
+      if(imc>30) extras+=1;
+      if(edad>50) extras+=1;
+      if((sexo==='m'&&cuello>40)||(sexo==='f'&&cuello>35)) extras+=1;
+      if(sexo==='m') extras+=1;
+      const score=base+extras;
+      ids.sbMetric.textContent=String(score);
+      if(score<=2){ ids.saosMetric.textContent='Bajo'; ids.saosMetric.style.color='var(--ok)'; }
+      else if(score<=4){ ids.saosMetric.textContent='Intermedio'; ids.saosMetric.style.color='var(--warn)'; }
+      else { ids.saosMetric.textContent='Alto'; ids.saosMetric.style.color='var(--danger)'; }
+      return score;
+    }
+
+    function computeEligibility(){
+      const imc=Number(ids.imc.value);
+      const eligible = imc>=30 || (imc>=27 && ids.comorb.value==='si');
+      ids.eligibilityMetric.textContent = eligible ? 'Elegible' : 'No elegible';
+      ids.eligibilityMetric.style.color = eligible ? 'var(--ok)' : 'var(--danger)';
+      return eligible;
+    }
+
+    function computePriorityScore(imc,eoss,sb){
+      let imcPoints=0;
+      if(imc>=40) imcPoints=3; else if(imc>=35) imcPoints=2; else if(imc>=30) imcPoints=1; else if(imc>=27) imcPoints=.5;
+      let eossPoints=Number(eoss||0);
+      let saosPoints= sb>=5 ? 3 : sb>=3 ? 2 : 1;
+      const total=imcPoints+eossPoints+saosPoints;
+      let level='Verde', color='var(--ok)', width=Math.min((total/9)*100,100);
+      if(total>=6){ level='Rojo'; color='var(--danger)'; }
+      else if(total>=3.5){ level='Amarillo'; color='var(--warn)'; }
+      ids.priorityLabel.textContent=`${level} · ${total.toFixed(1)} / 9`;
+      ids.priorityLabel.style.color=color;
+      ids.priorityBar.style.width=`${width}%`;
+      ids.priorityBar.style.background = level==='Rojo' ? 'linear-gradient(90deg,#e6553f,#ff7a66)' : level==='Amarillo' ? 'linear-gradient(90deg,#e1a400,#f3c43c)' : 'linear-gradient(90deg,#1f8a4c,#4ab36d)';
+      return {total,level};
+    }
+
+    function doseHtml(drug){
+      const doses={
+        'Semaglutide': '<div class="pill-row"><span class="pill">Esquema sugerido</span></div><ul><li>Semanas 1–4: 0.25 mg SC semanal</li><li>Semanas 5–8: 0.5 mg SC semanal</li><li>Semanas 9–12: 1.0 mg SC semanal</li><li>Semanas 13–16: 1.7 mg SC semanal</li><li>Semana 17 en adelante: 2.4 mg SC semanal</li></ul><p class="small">Escalar según tolerancia gastrointestinal.</p>',
+        'Tirzepatide': '<div class="pill-row"><span class="pill">Esquema sugerido</span></div><ul><li>Semanas 1–4: 2.5 mg SC semanal</li><li>Semanas 5–8: 5 mg SC semanal</li><li>Semanas 9–12: 7.5 mg SC semanal</li><li>Semanas 13–16: 10 mg SC semanal</li><li>Semanas 17–20: 12.5 mg SC semanal</li><li>Semana 21 en adelante: 15 mg SC semanal</li></ul><p class="small">Dosis de mantenimiento posibles: 5, 10 o 15 mg SC semanal según respuesta y tolerancia.</p>',
+        'Naltrexona/Bupropion': '<div class="pill-row"><span class="pill">Esquema sugerido (8/90 mg)</span></div><ul><li>Semana 1: 1 tableta en la mañana</li><li>Semana 2: 1 tableta cada 12 horas</li><li>Semana 3: 2 tabletas en la mañana y 1 en la noche</li><li>Semana 4 en adelante: 2 tabletas cada 12 horas</li></ul><p class="small">Evitar en antecedente de convulsiones.</p>',
+        'Orlistat': '<div class="pill-row"><span class="pill">Esquema sugerido</span></div><ul><li>120 mg VO con cada comida principal</li><li>Máximo: 360 mg al día</li></ul><p class="small">Advertir efectos gastrointestinales y valorar vitaminas liposolubles si se usa a largo plazo.</p>'
+      };
+      return doses[drug] || '<div class="small">No hay dosis automática para este escenario porque todavía no se ha definido el medicamento principal.</div>';
+    }
+
+    function buildRecommendation(){
+      const edad=Number(ids.edad.value), peso=Number(ids.peso.value), talla=Number(ids.talla.value), imc=Number(ids.imc.value), eoss=suggestEoss(), sb=computeStopBang(), ess=ids.ess.value===''?null:Number(ids.ess.value), eligible=computeEligibility(), phenotype=suggestPhenotype();
+
+      if(!edad||!peso||!talla||!imc||eoss===''){
+        ids.resultBox.innerHTML='<h3>Faltan datos</h3><p>Completa al menos edad, peso, talla y EOSS final. Sin esos datos la máquina clínica tose humo.</p>';
+        return;
+      }
+
+      const priority=computePriorityScore(imc,eoss,sb);
+
+      if(imc >= 27 && imc < 30 && ids.comorb.value === 'no'){
+        const txt=currentMode==='doctor'
+          ? 'Paciente con IMC 27–29.9 kg/m² sin complicaciones de adiposopatía: no se recomienda farmacoterapia de primera línea. Reforzar intervención intensiva no farmacológica.'
+          : 'Con este nivel de peso y sin complicaciones importantes, lo principal es reforzar ejercicio, alimentación estructurada, sueño y hábitos antes de pensar en medicamentos.';
+        ids.resultBox.innerHTML=`<h3>No se recomienda fármaco de primera línea</h3><div class="pill-row"><span class="pill warn">IMC ${imc.toFixed(1)}</span><span class="pill warn">Sin adiposopatía relevante</span></div><p>${txt}</p>`;
+        ids.doseBox.innerHTML='<div class="small">Sin esquema de dosis porque la primera línea aquí debe ser no farmacológica.</div>';
+        ids.noteOutput.value=`Nota médica resumida\nPaciente de ${edad} años con IMC ${imc.toFixed(1)} kg/m², EOSS ${eoss}, STOP-BANG ${sb}. En ausencia de complicaciones de adiposopatía, no se recomienda farmacoterapia de primera línea. Reforzar medidas no farmacológicas intensivas.`;
+        return;
+      }
+
+      if(!eligible){
+        const txt=currentMode==='doctor'
+          ? 'El paciente no cumple criterios estándar para farmacoterapia con la información capturada. Priorizar intervención intensiva sobre estilo de vida, reevaluación clínica y seguimiento de comorbilidades.'
+          : 'Con los datos actuales, no parece necesario iniciar medicamento para peso de entrada. La prioridad sería trabajar alimentación, actividad física y seguimiento médico.';
+        ids.resultBox.innerHTML=`<h3>No elegible para farmacoterapia</h3><div class="pill-row"><span class="pill warn">IMC ${imc.toFixed(1)}</span><span class="pill warn">STOP-BANG ${sb}</span><span class="pill warn">EOSS ${eoss}</span></div><p>${txt}</p>`;
+        ids.doseBox.innerHTML='<div class="small">Sin esquema de dosis porque no hay indicación farmacológica inicial.</div>';
+        ids.noteOutput.value=`Nota clínica resumida\nPaciente con IMC ${imc.toFixed(1)} kg/m², EOSS ${eoss}, STOP-BANG ${sb}. No cumple criterios estándar de elegibilidad farmacológica según datos capturados. Se sugiere intervención intensiva en estilo de vida y reevaluación clínica.`;
+        return;
+      }
+
+      let drug='', alternative='', contraindicated='', action='', rationale=[], followup=[], urgent=false, phenotypeLabel=phenotype.label, effectivePhenotype=phenotype.code;
+      if(effectivePhenotype==='6' && sb>=3){
+        effectivePhenotype='4';
+        phenotypeLabel='Fenotipo 4 - Reclasificado por sospecha respiratoria';
+        rationale.push('Fenotipo 6 reclasificado a fenotipo respiratorio por STOP-BANG ≥3.');
+      }
+
+      switch(effectivePhenotype){
+        case '1':
+          if(sb>=3){
+            drug='Tirzepatide'; alternative='Semaglutide'; contraindicated= sb>=5 ? 'Fentermina' : 'Fentermina si predomina alto riesgo respiratorio';
+            action= sb>=5 ? 'Derivar de forma urgente a Neumología o Medicina del Sueño. Considerar polisomnografía y CPAP. Iniciar tirzepatide sin retrasar innecesariamente el tratamiento del peso.' : 'Solicitar estudio de sueño domiciliario o polisomnografía según contexto. Si se confirma Síndrome de Apnea Obstructiva del Sueño, mantener preferencia por tirzepatide.';
+            rationale.push('Combina beneficio cardiometabólico y una mejor perspectiva para el componente respiratorio.');
+          } else {
+            drug='Tirzepatide'; alternative='Semaglutide'; contraindicated='Sin contraindicación principal específica por fenotipo';
+            action='Iniciar farmacoterapia con seguimiento cardiometabólico habitual.';
+            rationale.push('Mayor eficacia esperada en pérdida de peso y control glucometabólico.');
+          }
+          if(sb>=5) urgent=true;
+          break;
+        case '2':
+          drug='Semaglutide'; alternative='Tirzepatide'; contraindicated='No hay contraindicación absoluta específica por fenotipo, pero semaglutide es preferente';
+          action= sb>=5 ? 'Mantener prioridad cardiovascular con semaglutide y derivar de forma urgente a Neumología o Medicina del Sueño por alto riesgo de Síndrome de Apnea Obstructiva del Sueño.' : 'Iniciar semaglutide por preferencia de evidencia cardiovascular. Si hay sospecha respiratoria, complementar estudio de sueño.';
+          rationale.push('En enfermedad cardiovascular establecida, semaglutide conserva prioridad terapéutica por respaldo cardiovascular más sólido.');
+          if(sb>=5) urgent=true;
+          break;
+        case '3':
+          drug='Tirzepatide'; alternative='Semaglutide'; contraindicated= sb>=5 ? 'Fentermina' : 'Sin contraindicación dominante específica';
+          action= sb>=5 ? 'Derivar por alto riesgo respiratorio. Tirzepatide puede iniciarse mientras se organiza estudio del sueño.' : 'Iniciar tirzepatide y vigilar evolución hepática, peso y tolerancia.';
+          rationale.push('Atractivo clínico por beneficio dual en peso y perfil hepático.');
+          if(sb>=5) urgent=true;
+          break;
+        case '4':
+          if(sb<=2){
+            drug='Semaglutide'; alternative='Tirzepatide'; contraindicated='Fentermina si hay síntomas respiratorios importantes o sospecha de descompensación';
+            action='Con STOP-BANG bajo, el componente respiratorio clínicamente relevante es menos probable. Se puede iniciar manejo estándar del peso y reevaluar síntomas.';
+            rationale.push('Semaglutide es razonable cuando la sospecha respiratoria no es alta.');
+          } else if(sb<=4){
+            drug='Semaglutide'; alternative='Tirzepatide si se confirma Síndrome de Apnea Obstructiva del Sueño'; contraindicated='Fentermina no ideal si la sospecha respiratoria aumenta';
+            action='Solicitar HSAT, oximetría o polisomnografía. Mientras se investiga, puede iniciarse semaglutide. Si se confirma Síndrome de Apnea Obstructiva del Sueño clínicamente relevante, escalar a tirzepatide.';
+            rationale.push('Escenario puente mientras se confirma el diagnóstico respiratorio.');
+          } else {
+            drug='Tirzepatide'; alternative='Semaglutide'; contraindicated='Fentermina';
+            action='Derivación urgente a Neumología o Medicina del Sueño. Considerar polisomnografía y CPAP. Iniciar tirzepatide como estrategia prioritaria de pérdida de peso.';
+            rationale.push('Alto riesgo respiratorio: se prioriza un fármaco con mejor expectativa sobre SAOS y se evita el simpaticomimético.');
+            urgent=true;
+          }
+          break;
+        case '5':
+          if(sb>=5){
+            drug='Tirzepatide'; alternative='Naltrexona/Bupropion'; contraindicated='Fentermina';
+            action='El riesgo respiratorio alto domina la escena clínica. Derivar urgente y priorizar tirzepatide.';
+            rationale.push('Cuando SAOS es de alto riesgo, el fenotipo hedónico deja de ser el actor principal.');
+            urgent=true;
+          } else {
+            drug='Naltrexona/Bupropion'; alternative='Semaglutide'; contraindicated='Naltrexona/Bupropion en antecedente de convulsiones';
+            action= sb>=3 ? 'Investigar Síndrome de Apnea Obstructiva del Sueño y, si se confirma con mayor gravedad, reconsiderar tirzepatide.' : 'Iniciar manejo orientado a craving y conducta alimentaria, idealmente con apoyo psicológico o psiquiátrico si se requiere.';
+            rationale.push('Fenotipo especialmente útil para un enfoque sobre circuitos hedónicos y atracones.');
+          }
+          break;
+        case '6':
+          drug='Selección según meta de pérdida de peso';
+          alternative='Individualizar';
+          contraindicated='Depende del perfil del paciente';
+          action='Seleccionar tratamiento según objetivo de pérdida de peso: 5–8%: Orlistat o Naltrexona/Bupropion. 10–15%: Semaglutide. 15–20% o más: Tirzepatide. Elegir además según costo, tolerancia, preferencia del paciente y acceso.';
+          rationale.push('En ausencia de fenotipo dominante, la selección se basa en la magnitud esperada de pérdida de peso.');
+          break;
+      }
+
+      if(eoss==='3') rationale.push('EOSS 3: amerita pensar en manejo compartido o derivación por complejidad clínica.');
+      if(ess!==null && ess>=11 && sb>=3) rationale.push(`ESS ${ess}: somnolencia diurna excesiva que refuerza la sospecha clínica de Síndrome de Apnea Obstructiva del Sueño.`);
+      rationale.push('La obesidad es una enfermedad crónica, progresiva y multifactorial que requiere abordaje integral.');
+
+      followup.push('Revalorar peso, tolerancia y eventos adversos cada 4 semanas durante titulación.');
+      followup.push('A las 12 semanas, buscar al menos 5% de pérdida de peso para considerar respuesta adecuada.');
+      if(sb>=3) followup.push('Monitorear síntomas respiratorios y repetir ESS si aplica.');
+      if(urgent) followup.push('Coordinar estudio de sueño y eventual CPAP con Neumología o Medicina del Sueño.');
+
+      const pills=`<div class="pill-row"><span class="pill ${priority.level==='Rojo'?'danger':priority.level==='Amarillo'?'warn':'good'}">Prioridad ${priority.level}</span><span class="pill">Fenotipo: ${phenotypeLabel}</span><span class="pill">EOSS ${eoss}</span><span class="pill">STOP-BANG ${sb}</span><span class="pill">IMC ${imc.toFixed(1)}</span></div>`;
+
+      const doctorHtml=`<h3>Recomendación terapéutica</h3>${pills}<p><strong>Medicamento principal:</strong> ${drug}</p><p><strong>Alternativa razonable:</strong> ${alternative}</p><p><strong>Medicamento a evitar / contraindicado en este escenario:</strong> <span style="color:var(--danger);font-weight:800">${contraindicated}</span></p><p><strong>Acción sugerida:</strong> ${action}</p><p><strong>Justificación clínica:</strong></p><ul>${rationale.map(x=>`<li>${x}</li>`).join('')}</ul><p><strong>Seguimiento:</strong></p><ul>${followup.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+
+      const patientHtml=`<h3>Resumen para paciente</h3>${pills}<p><strong>¿Qué significa esto?</strong></p><p>La obesidad es una enfermedad crónica, no solo un tema de peso. Involucra hormonas, metabolismo, cerebro y emociones.</p><p>El tratamiento puede incluir medicamentos, pero siempre debe acompañarse de:</p><ul><li>Plan de alimentación estructurado</li><li>Actividad física regular</li><li>Buen descanso</li><li>Cuidado de la salud mental</li></ul><p><strong>Tratamiento sugerido:</strong> ${drug}</p><p><strong>Medicamento que no sería buena idea en este caso:</strong> <span style="color:var(--danger);font-weight:800">${contraindicated}</span></p><p>${urgent ? 'También hay datos que sugieren un problema respiratorio durante el sueño, por lo que es importante una valoración especializada.' : 'El enfoque será integral, no solo farmacológico.'}</p>`;
+
+      ids.resultBox.innerHTML = currentMode==='doctor' ? doctorHtml : patientHtml;
+      ids.doseBox.innerHTML = currentMode==='doctor' ? doseHtml(drug) : '<div class="small">En modo paciente no se muestran dosis ni escalamiento para mantener el resumen claro y enfocado en educación.</div>';
+
+      ids.noteOutput.value=`Nota médica resumida
+Paciente de ${edad} años, sexo ${ids.sexo.value==='m'?'masculino':'femenino'}, peso ${peso.toFixed(1)} kg, talla ${talla.toFixed(2)} m, IMC ${imc.toFixed(1)} kg/m².
+Elegibilidad farmacológica: ${eligible ? 'sí' : 'no'}.
+Fenotipo sugerido: ${phenotypeLabel}.
+EOSS: ${eoss}.
+STOP-BANG: ${sb} (${ids.saosMetric.textContent}).
+ESS: ${ess===null ? 'no capturado' : ess}.
+Score combinado de prioridad: ${priority.total.toFixed(1)} (${priority.level}).
+Tratamiento sugerido: ${drug}.
+Alternativa: ${alternative}.
+Medicamento a evitar / contraindicado en este contexto: ${contraindicated}.
+Plan orientativo: ${action}
+Seguimiento sugerido: ${followup.join(' ')}`;
+    }
+
+    function resetAll(){
+      document.querySelectorAll('input[type="number"]').forEach(el=>el.value='');
+      document.querySelectorAll('select').forEach(el=>{ if(el.id==='sexo') el.value='m'; else if(el.id==='hta') el.value='no'; else if(el.id==='comorb') el.value='si'; else el.selectedIndex=0; });
+      document.querySelectorAll('input[type="radio"]').forEach(r=>{ if(r.value==='0') r.checked=true; else r.checked=false; });
+      document.querySelectorAll('input[name="eossq"]').forEach(r=>r.checked=false);
+      ids.imcMetric.textContent='0.0';
+      ids.sbMetric.textContent='0';
+      ids.saosMetric.textContent='Bajo';
+      ids.saosMetric.style.color='var(--ok)';
+      ids.eligibilityMetric.textContent='Pendiente';
+      ids.eligibilityMetric.style.color='var(--primary-dark)';
+      ids.phenotypeSuggestion.textContent='Pendiente';
+      ids.eossAutoText.value='';
+      ids.priorityLabel.textContent='Pendiente';
+      ids.priorityLabel.style.color='var(--primary-dark)';
+      ids.priorityBar.style.width='0%';
+      ids.priorityBar.style.background='linear-gradient(90deg,var(--ok),#4ab36d)';
+      ids.resultBox.innerHTML='<h3>Recomendación clínica</h3><p>Completa los datos y presiona <strong>Calcular recomendación</strong>.</p>';
+      ids.doseBox.innerHTML='<div class="small">Todavía sin calcular.</div>';
+      ids.noteOutput.value='';
+      ids.imc.value='';
+    }
+
+    function fillDemo(){
+      ids.edad.value=56; ids.sexo.value='m'; ids.peso.value=112; ids.talla.value=1.72; ids.cintura.value=118; ids.cuello.value=43; ids.hta.value='si'; ids.comorb.value='si'; ids.ess.value=13;
+      setRadio('phen1',1); setRadio('phen2',0); setRadio('phen3',0); setRadio('phen4',1); setRadio('phen5',0);
+      setRadio('q1',1); setRadio('q2',1); setRadio('q3',1); setRadio('q4',1);
+      const e2=document.querySelector('input[name="eossq"][value="2"]'); if(e2) e2.checked=true; ids.eossManual.value='2';
+      calculateImc(); suggestPhenotype(); suggestEoss(); buildRecommendation();
+    }
+
     function recalcLite(){ calculateImc(); suggestPhenotype(); suggestEoss(); computeStopBang(); computeEligibility(); }
+
     document.getElementById('calculateBtn').addEventListener('click',()=>{ recalcLite(); buildRecommendation(); });
     document.getElementById('fillDemoBtn').addEventListener('click',fillDemo);
     document.getElementById('resetBtn').addEventListener('click',resetAll);
     document.getElementById('printBtn').addEventListener('click',()=>window.print());
     document.getElementById('copyNoteBtn').addEventListener('click', async ()=>{ try{ await navigator.clipboard.writeText(ids.noteOutput.value); alert('Resumen copiado.'); } catch(e){ alert('No se pudo copiar automáticamente. Puedes seleccionarlo manualmente.'); } });
-    document.getElementById('doctorModeBtn').addEventListener('click',()=>{ currentMode='doctor'; document.getElementById('doctorModeBtn').classList.add('active'); document.getElementById('patientModeBtn').classList.remove('active'); buildRecommendation(); });
+    document.getElementById('doctorModeBtn').addEventListener('click',()=>{ currentMode='doctor'; document.getElementById('doctorModeBtn').classList.add('active','doctor-red'); document.getElementById('patientModeBtn').classList.remove('active'); buildRecommendation(); });
     document.getElementById('patientModeBtn').addEventListener('click',()=>{ currentMode='patient'; document.getElementById('patientModeBtn').classList.add('active'); document.getElementById('doctorModeBtn').classList.remove('active'); buildRecommendation(); });
     ['edad','peso','talla','cuello','ess'].forEach(id=>ids[id].addEventListener('input',recalcLite));
     ['sexo','hta','comorb','eossManual'].forEach(id=>ids[id].addEventListener('change',recalcLite));
     document.querySelectorAll('input[type="radio"]').forEach(el=>el.addEventListener('change',recalcLite));
+
     resetAll();
   </script>
 </body>

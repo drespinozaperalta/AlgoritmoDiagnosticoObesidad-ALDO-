@@ -84,6 +84,17 @@
     .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
     .dot.green{background:var(--ok)} .dot.yellow{background:var(--warn)} .dot.red{background:var(--danger)}
     .footnote{color:var(--muted);font-size:.86rem;line-height:1.45;margin-top:14px}
+    .tooltip{position:relative;display:inline-flex;align-items:center;gap:6px;cursor:help;vertical-align:middle}
+    .tooltip-icon{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#eaf2ff;color:var(--primary);font-size:.78rem;font-weight:800}
+    .tooltip .tooltip-text{visibility:hidden;opacity:0;transition:opacity .18s ease;position:absolute;left:0;top:125%;z-index:20;width:min(360px,90vw);background:#17324a;color:#fff;padding:12px 14px;border-radius:12px;box-shadow:var(--shadow);font-size:.85rem;line-height:1.45}
+    .tooltip:hover .tooltip-text{visibility:visible;opacity:1}
+    .credit-box{border-top:1px solid var(--border);margin-top:18px;padding-top:14px;color:var(--muted);font-size:.85rem;line-height:1.45}
+    .hedoq-grid{display:grid;gap:12px;margin-top:12px}
+    .hedoq-result{margin-top:12px;padding:14px 16px;border-radius:14px;background:#eef4fb;border:1px solid var(--border)}
+    .hedoq-mini{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .hedoq-mini span{background:#f1f5f9;color:#4b5f73;border-radius:999px;padding:6px 10px;font-size:.86rem}
+
+
     ul.compact{margin:8px 0 0 18px;padding:0}
     @media print{body{background:#fff}.hero,.toolbar,.mode-switch,.no-print{display:none !important}.container{width:100%;padding:0}.card,.result{box-shadow:none;border:1px solid #bbb}.layout{display:block}}
     @media (max-width:1080px){.layout,.grid-2,.grid-3,.grid-4,.metric-grid{grid-template-columns:1fr}.container{width:min(100% - 20px,1280px)}}
@@ -93,13 +104,7 @@
   <div class="container">
     <section class="hero">
       <h1>Algoritmo PRO de farmacoterapia para obesidad</h1>
-      <p>herramienta de toma de decisiones integradas que combina:
-
-📊 IMC y criterios de elegibilidad
-🧬 Fenotipos clínicos (cardiometabólico, respiratorio, hepático, hedónico)
-⚖️ EOSS para estratificar severidad real (no solo peso)
-😴 STOP-BANG y ESS para detectar riesgo oculto de Síndrome de Apnea Obstructiva del Sueño
-🚦 Score combinado de prioridad terapéutica, que traduce datos en urgencia clínica</p>
+      <p>Versión expandida para GitHub Pages con cuestionarios guiados, fenotipo clínico sugerido, autocalculo orientativo de EOSS y ESS, score combinado de prioridad terapéutica, semáforos visuales, esquema de dosis y resumen exportable tipo nota médica.</p>
       <div class="badge-row">
         <span class="badge">IMC automático</span>
         <span class="badge">Fenotipo sugerido</span>
@@ -143,7 +148,7 @@
         </section>
 
         <section class="card">
-          <div class="section-title"><h2>2) Cuestionario clínico para fenotipo</h2><p class="sub">Marca lo que mejor describe al paciente. El sistema sugiere un fenotipo principal, pero tú conservas el volante clínico.</p></div>
+          <div class="section-title"><h2>2) Cuestionario clínico para fenotipo <span class="tooltip"><span class="tooltip-icon">i</span><span class="tooltip-text">El fenotipo intenta identificar cuál es la fuerza dominante de la obesidad en este paciente. A veces predomina el componente cardiometabólico; en otros, lo respiratorio, lo hepático o lo hedónico. Esto ayuda a seleccionar la intervención más lógica y a evitar tratar a todos los pacientes como si fueran iguales.</span></span></h2><p class="sub">Marca lo que mejor describe al paciente. El sistema sugiere un fenotipo principal, pero tú conservas el volante clínico.</p></div>
 
           <div class="q"><div class="q-title"><div class="q-icon">1</div><div><strong>Cardiometabólico</strong><div class="small">Diabetes tipo 2, hipertensión, dislipidemia, insulinorresistencia o adiposidad central marcada.</div></div></div><div class="yesno"><label><input type="radio" name="phen1" value="1">Sí</label><label><input type="radio" name="phen1" value="0" checked>No</label></div></div>
           <div class="q"><div class="q-title"><div class="q-icon">2</div><div><strong>Enfermedad cardiovascular establecida</strong><div class="small">Infarto, ictus, angina, aterosclerosis conocida o insuficiencia cardiaca.</div></div></div><div class="yesno"><label><input type="radio" name="phen2" value="1">Sí</label><label><input type="radio" name="phen2" value="0" checked>No</label></div></div>
@@ -160,16 +165,74 @@
                 <li>Se asocia a comer rápido, sin hambre, hasta incomodidad o con culpa posterior</li>
                 <li>No hay conductas compensatorias regulares</li>
               </ul>
-              <strong>Cuestionario HAT orientativo:</strong>
-              <div class="small">Si hay craving intenso, ingesta emocional o pérdida de control, aumenta la probabilidad de fenotipo hedónico.</div>
+              <strong>Cuestionarios útiles para perfilar sobreingesta hedónica:</strong>
+              <ul class="compact small">
+                <li><strong>HEDO-Q:</strong> medida breve de autoinforme para evaluar liking, wanting y falta de control sobre la alimentación.</li>
+                <li><strong>PFS - Power of Food Scale:</strong> mide la motivación psicológica hacia los alimentos apetitosos, más en fase anticipatoria que en cantidad consumida.</li>
+                <li><strong>OQ - Overeating Questionnaire:</strong> evalúa hábitos y actitudes relacionadas con la sobreingesta, útil durante el tratamiento de la obesidad.</li>
+              </ul>
             </div>
+          </div>
           </div>
 
           <div class="summary-box"><strong>Fenotipo sugerido:</strong> <span id="phenotypeSuggestion">Pendiente</span><div class="small">Jerarquía aplicada si marcas varios: ECV > SAOS > MASLD > hedónico > cardiometabólico > obesidad “pura”.</div></div>
         </section>
 
         <section class="card">
-          <div class="section-title"><h2>3) Autocálculo orientativo de EOSS</h2><p class="sub">Si alguien no conoce la herramienta, aquí lo aterrizamos a ejemplos clínicos.</p></div>
+          <div class="section-title"><h2>2A) Cuestionario HEDO-Q <span class="tooltip"><span class="tooltip-icon">i</span><span class="tooltip-text">El HEDO-Q ayuda a perfilar tres componentes de sobreingesta hedónica: wanting, liking y dyscontrol. No diagnostica por sí solo, pero puede reforzar la sospecha de un fenotipo hedónico cuando el craving, el placer alimentario y la pérdida de control ocupan un lugar central.</span></span></h2><p class="sub">Puedes usarlo como apoyo para fenotipo hedónico. El resultado se calcula automáticamente y queda visible para integrar la interpretación clínica.</p></div>
+
+          <div class="hedoq-grid">
+            <div class="q">
+              <label class="label" for="hedo1">1. Siento un fuerte impulso de comer algo rico.</label>
+              <select id="hedo1">
+                <option value="0">Nunca (0)</option><option value="1">Rara vez (1)</option><option value="2">A veces (2)</option><option value="3">A menudo (3)</option><option value="4">Siempre (4)</option>
+              </select>
+            </div>
+            <div class="q">
+              <label class="label" for="hedo2">2. Una vez que empiezo a comer, no puedo parar.</label>
+              <select id="hedo2">
+                <option value="0">Nunca (0)</option><option value="1">Rara vez (1)</option><option value="2">A veces (2)</option><option value="3">A menudo (3)</option><option value="4">Siempre (4)</option>
+              </select>
+            </div>
+            <div class="q">
+              <label class="label" for="hedo3">3. Disfruto mucho del sabor de la comida.</label>
+              <select id="hedo3">
+                <option value="0">Nunca (0)</option><option value="1">Rara vez (1)</option><option value="2">A veces (2)</option><option value="3">A menudo (3)</option><option value="4">Siempre (4)</option>
+              </select>
+            </div>
+            <div class="q">
+              <label class="label" for="hedo4">4. Pienso con frecuencia en comidas sabrosas.</label>
+              <select id="hedo4">
+                <option value="0">Nunca (0)</option><option value="1">Rara vez (1)</option><option value="2">A veces (2)</option><option value="3">A menudo (3)</option><option value="4">Siempre (4)</option>
+              </select>
+            </div>
+            <div class="q">
+              <label class="label" for="hedo5">5. Me da mucho placer comer cosas dulces o grasas.</label>
+              <select id="hedo5">
+                <option value="0">Nunca (0)</option><option value="1">Rara vez (1)</option><option value="2">A veces (2)</option><option value="3">A menudo (3)</option><option value="4">Siempre (4)</option>
+              </select>
+            </div>
+            <div class="q">
+              <label class="label" for="hedo6">6. Pierdo el control sobre lo que como.</label>
+              <select id="hedo6">
+                <option value="0">Nunca (0)</option><option value="1">Rara vez (1)</option><option value="2">A veces (2)</option><option value="3">A menudo (3)</option><option value="4">Siempre (4)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="hedoq-result">
+            <strong>Resultado HEDO-Q:</strong> <span id="hedoTotal">0.00</span>
+            <div class="hedoq-mini">
+              <span>Wanting: <strong id="hedoWanting">0.00</strong></span>
+              <span>Liking: <strong id="hedoLiking">0.00</strong></span>
+              <span>Dyscontrol: <strong id="hedoDyscontrol">0.00</strong></span>
+            </div>
+            <div class="small" id="hedoInterpretation">Sin datos suficientes para interpretar aún.</div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-title"><h2>3) Autocalculo orientativo de EOSS <span class="tooltip"><span class="tooltip-icon">i</span><span class="tooltip-text">El EOSS no se enfoca solo en cuánto pesa el paciente, sino en cuánto daño clínico, funcional o psicológico está generando la obesidad. Dos personas con el mismo IMC pueden tener estadios muy distintos y por eso requerir intensidades terapéuticas diferentes.</span></span></h2><p class="sub">Si alguien no conoce la herramienta, aquí lo aterrizamos a ejemplos clínicos.</p></div>
           <div class="q"><div class="q-title"><div class="q-icon">E0</div><div><strong>Estadio 0</strong><div class="small">Sin comorbilidades relevantes, sin limitación funcional, sin afectación psicológica significativa.</div></div></div><div class="yesno"><label><input type="radio" name="eossq" value="0">Se parece a este</label></div></div>
           <div class="q"><div class="q-title"><div class="q-icon">E1</div><div><strong>Estadio 1</strong><div class="small">Factores de riesgo leves: hipertensión leve, prediabetes, dislipidemia, apnea leve o síntomas mínimos.</div></div></div><div class="yesno"><label><input type="radio" name="eossq" value="1">Se parece a este</label></div></div>
           <div class="q"><div class="q-title"><div class="q-icon">E2</div><div><strong>Estadio 2</strong><div class="small">Enfermedad establecida: diabetes tipo 2, MASLD moderada, enfermedad cardiovascular o Síndrome de Apnea Obstructiva del Sueño moderado.</div></div></div><div class="yesno"><label><input type="radio" name="eossq" value="2">Se parece a este</label></div></div>
@@ -181,7 +244,7 @@
         </section>
 
         <section class="card">
-          <div class="section-title"><h2>4) STOP-BANG y ESS</h2><p class="sub">El escrutinio respiratorio ahora trae rueditas de apoyo para no dejar a nadie atorado.</p></div>
+          <div class="section-title"><h2>4) STOP-BANG y ESS <span class="tooltip"><span class="tooltip-icon">i</span><span class="tooltip-text">STOP-BANG funciona como tamiz para estimar riesgo de Síndrome de Apnea Obstructiva del Sueño. La escala ESS complementa la valoración al medir somnolencia diurna. Juntas ayudan a detectar cuándo la obesidad ya está afectando sueño, energía, presión arterial y riesgo cardiovascular.</span></span></h2><p class="sub">El escrutinio respiratorio ahora trae rueditas de apoyo para no dejar a nadie atorado.</p></div>
           <div class="grid-2">
             <div>
               <div class="q"><div class="q-title"><div class="q-icon">S</div><div><strong>Snoring</strong><div class="small">¿Ronca fuerte?</div></div></div><div class="yesno"><label><input type="radio" name="q1" value="1">Sí</label><label><input type="radio" name="q1" value="0" checked>No</label></div></div>
@@ -199,7 +262,7 @@
 
       <div>
         <section class="card">
-          <div class="section-title"><h2>Tablero de decisión</h2><p class="sub">Todo resumido en formato semáforo.</p></div>
+          <div class="section-title"><h2>Tablero de decisión <span class="tooltip"><span class="tooltip-icon">i</span><span class="tooltip-text">El semáforo resume prioridad terapéutica combinando IMC, EOSS y riesgo respiratorio. Verde suele indicar una urgencia menor, amarillo una prioridad intermedia y rojo una necesidad de intervención más intensiva o más rápida. No reemplaza juicio clínico, pero organiza la consulta.</span></span></h2><p class="sub">Todo resumido en formato semáforo.</p></div>
           <div class="metric-grid">
             <div class="metric"><div class="k">IMC</div><div class="v" id="imcMetric">0.0</div></div>
             <div class="metric"><div class="k">STOP-BANG</div><div class="v" id="sbMetric">0</div></div>
@@ -212,32 +275,57 @@
             <div class="metric"><div class="k">Meta intensiva 15%</div><div class="v" id="goal15Metric">--</div></div>
             <div class="metric"><div class="k">Pérdida esperada</div><div class="v" id="expectedLossMetric">--</div></div>
           </div>
-          <div class="summary-box" style="margin-top:14px"><strong>Score combinado de prioridad terapéutica:</strong><div id="priorityLabel" style="margin-top:6px;font-weight:800;font-size:1.1rem">Pendiente</div><div class="progress-wrap"><div class="progress-bar" id="priorityBar"></div></div><div class="legend"><span><i class="dot green"></i> Verde = prioridad baja</span><span><i class="dot yellow"></i> Amarillo = prioridad intermedia</span><span><i class="dot red"></i> Rojo = prioridad alta</span></div><div class="small">Puntaje combinado = IMC + EOSS + SAOS. Es orientativo para priorizar intensidad y urgencia del manejo, no reemplaza juicio clínico.</div></div>
+          <div class="summary-box" style="margin-top:14px"><strong>Score combinado de prioridad terapéutica <span class="tooltip"><span class="tooltip-icon">i</span><span class="tooltip-text">Este puntaje no diagnostica por sí solo. Su utilidad es ordenar prioridades con una lógica sencilla: cuánto exceso de adiposidad existe, cuánto daño clínico ya hay y cuánto riesgo respiratorio está presente. Sirve para dimensionar qué tan intensivo debe ser el plan.</span></span>:</strong><div id="priorityLabel" style="margin-top:6px;font-weight:800;font-size:1.1rem">Pendiente</div><div class="progress-wrap"><div class="progress-bar" id="priorityBar"></div></div><div class="legend"><span><i class="dot green"></i> Verde = prioridad baja</span><span><i class="dot yellow"></i> Amarillo = prioridad intermedia</span><span><i class="dot red"></i> Rojo = prioridad alta</span></div><div class="small">Puntaje combinado = IMC + EOSS + SAOS. Es orientativo para priorizar intensidad y urgencia del manejo, no reemplaza juicio clínico.</div></div>
           <div class="mode-switch no-print"><button class="mode-btn active doctor-red" id="doctorModeBtn">Modo médico (click para interpretar)</button><button class="mode-btn" id="patientModeBtn">Modo paciente (Para explicar al paciente durante la consulta)</button></div>
           <div class="result" id="resultBox" style="margin-top:14px"><h3>Recomendación clínica</h3><p>Completa los datos y presiona <strong>Calcular recomendación</strong>.</p></div>
         </section>
-        <section class="card"><div class="section-title"><h2>Dosis automáticas orientativas</h2><p class="sub">Se muestran según el medicamento sugerido.</p></div><div id="doseBox"><div class="small">Todavía sin calcular.</div></div><div class="summary-box" style="margin-top:12px"><strong>Metas dinámicas de pérdida de peso:</strong><div class="small">Se calculan automáticamente en kilos a partir del peso actual y ayudan a discutir objetivos realistas en consulta.</div></div></section>
-        <section class="card"><div class="section-title"><h2>Resumen tipo nota médica exportable</h2><p class="sub">Se autogenera para copiar, pegar o imprimir.</p></div><textarea id="noteOutput" readonly placeholder="Aquí aparecerá el resumen clínico."></textarea><div class="toolbar no-print" style="margin-top:10px"><button class="secondary" id="copyNoteBtn">Copiar resumen</button></div></section>
+        <section class="card"><div class="section-title"><h2>Dosis automáticas orientativas <span class="tooltip"><span class="tooltip-icon">i</span><span class="tooltip-text">Las dosis mostradas son orientativas y sirven como guía rápida de escalamiento. Antes de prescribir, siempre hay que revisar ficha técnica, disponibilidad real, embarazo, comorbilidades, interacciones, tolerancia y contraindicaciones absolutas del fármaco recomendado.</span></span></h2><p class="sub">Se muestran según el medicamento sugerido.</p></div><div id="doseBox"><div class="small">Todavía sin calcular.</div></div><div class="summary-box" style="margin-top:12px"><strong>Metas dinámicas de pérdida de peso:</strong><div class="small">Se calculan automáticamente en kilos a partir del peso actual y ayudan a discutir objetivos realistas en consulta.</div></div></section>
+        <section class="card"><div class="section-title"><h2>Resumen tipo nota médica exportable <span class="tooltip"><span class="tooltip-icon">i</span><span class="tooltip-text">Este bloque está pensado para ahorrar tiempo en consulta. Resume el razonamiento central, metas de pérdida de peso, riesgo respiratorio, medicamento sugerido y plan de seguimiento. Se puede copiar, pegar o imprimir, y luego ajustarse al estilo de cada expediente.</span></span></h2><p class="sub">Se autogenera para copiar, pegar o imprimir.</p></div><textarea id="noteOutput" readonly placeholder="Aquí aparecerá el resumen clínico."></textarea><div class="toolbar no-print" style="margin-top:10px"><button class="secondary" id="copyNoteBtn">Copiar resumen</button></div></section>
         <section class="card"><div class="section-title"><h2>Guía rápida</h2><p class="sub">Atajo de bolsillo para no ir a pescar conceptos a mitad de consulta.</p></div><div class="table-wrap"><table><thead><tr><th>STOP-BANG</th><th>Riesgo</th><th>Acción sugerida</th></tr></thead><tbody><tr><td>0-2</td><td>Bajo</td><td>Continuar algoritmo estándar según fenotipo.</td></tr><tr><td>3-4</td><td>Intermedio</td><td>Considerar HSAT, oximetría o polisomnografía. Si se confirma Síndrome de Apnea Obstructiva del Sueño, preferir tirzepatide.</td></tr><tr><td>≥5</td><td>Alto</td><td>Derivación urgente a Neumología o Medicina del Sueño. Iniciar tratamiento del peso sin retrasar injustificadamente.</td></tr></tbody></table></div><div class="alert-box"><strong>Medicamento más claramente no recomendado en alto riesgo respiratorio:</strong><div class="small">Fentermina. En esta herramienta aparece como medicamento a evitar o contraindicado cuando el riesgo de Síndrome de Apnea Obstructiva del Sueño es alto.</div></div><div class="footnote">Herramienta de apoyo clínico. No sustituye guías locales, evaluación integral ni juicio médico.</div></section>
       </div>
     </div>
+    <div class="credit-box">Actualizado hasta el 11 de Abril 2026. Búsqueda de la literatura, algoritmo, codificación y diseño de flujo por Diego Espinoza-Peralta.</div>
   </div>
 
   <script>
     let currentMode = 'doctor';
     const ids = {
-      edad: document.getElementById('edad'), sexo: document.getElementById('sexo'), peso: document.getElementById('peso'), talla: document.getElementById('talla'), imc: document.getElementById('imc'), cintura: document.getElementById('cintura'), cuello: document.getElementById('cuello'), hta: document.getElementById('hta'), comorb: document.getElementById('comorb'), ess: document.getElementById('ess'), eossManual: document.getElementById('eossManual'), eossAutoText: document.getElementById('eossAutoText'), phenotypeSuggestion: document.getElementById('phenotypeSuggestion'), imcMetric: document.getElementById('imcMetric'), sbMetric: document.getElementById('sbMetric'), saosMetric: document.getElementById('saosMetric'), eligibilityMetric: document.getElementById('eligibilityMetric'), goal5Metric: document.getElementById('goal5Metric'), goal10Metric: document.getElementById('goal10Metric'), goal15Metric: document.getElementById('goal15Metric'), expectedLossMetric: document.getElementById('expectedLossMetric'), priorityLabel: document.getElementById('priorityLabel'), priorityBar: document.getElementById('priorityBar'), resultBox: document.getElementById('resultBox'), doseBox: document.getElementById('doseBox'), noteOutput: document.getElementById('noteOutput')
+      edad: document.getElementById('edad'), sexo: document.getElementById('sexo'), peso: document.getElementById('peso'), talla: document.getElementById('talla'), imc: document.getElementById('imc'), cintura: document.getElementById('cintura'), cuello: document.getElementById('cuello'), hta: document.getElementById('hta'), comorb: document.getElementById('comorb'), ess: document.getElementById('ess'), eossManual: document.getElementById('eossManual'), eossAutoText: document.getElementById('eossAutoText'), phenotypeSuggestion: document.getElementById('phenotypeSuggestion'), imcMetric: document.getElementById('imcMetric'), sbMetric: document.getElementById('sbMetric'), saosMetric: document.getElementById('saosMetric'), eligibilityMetric: document.getElementById('eligibilityMetric'), goal5Metric: document.getElementById('goal5Metric'), goal10Metric: document.getElementById('goal10Metric'), goal15Metric: document.getElementById('goal15Metric'), expectedLossMetric: document.getElementById('expectedLossMetric'), priorityLabel: document.getElementById('priorityLabel'), priorityBar: document.getElementById('priorityBar'), resultBox: document.getElementById('resultBox'), doseBox: document.getElementById('doseBox'), noteOutput: document.getElementById('noteOutput'), hedo1: document.getElementById('hedo1'), hedo2: document.getElementById('hedo2'), hedo3: document.getElementById('hedo3'), hedo4: document.getElementById('hedo4'), hedo5: document.getElementById('hedo5'), hedo6: document.getElementById('hedo6'), hedoTotal: document.getElementById('hedoTotal'), hedoWanting: document.getElementById('hedoWanting'), hedoLiking: document.getElementById('hedoLiking'), hedoDyscontrol: document.getElementById('hedoDyscontrol'), hedoInterpretation: document.getElementById('hedoInterpretation')
     };
 
     function radioValue(name){ const el = document.querySelector(`input[name="${name}"]:checked`); return el ? Number(el.value) : 0; }
     function setRadio(name, value){ const el = document.querySelector(`input[name="${name}"][value="${value}"]`); if(el) el.checked = true; }
     function calculateImc(){ const p = Number(ids.peso.value), t = Number(ids.talla.value); let imc = 0; if(p > 0 && t > 0) imc = p/(t*t); ids.imc.value = imc ? imc.toFixed(1) : ''; ids.imcMetric.textContent = imc ? imc.toFixed(1) : '0.0'; return imc; }
 
+
+    function calculateHedoQ(){
+      const v = [1,2,3,4,5,6].map(i => Number(document.getElementById(`hedo${i}`).value));
+      const wanting = (v[0] + v[3]) / 2;
+      const liking = (v[2] + v[4]) / 2;
+      const dyscontrol = (v[1] + v[5]) / 2;
+      const total = v.reduce((a,b) => a+b, 0) / 6;
+
+      ids.hedoTotal.textContent = total.toFixed(2);
+      ids.hedoWanting.textContent = wanting.toFixed(2);
+      ids.hedoLiking.textContent = liking.toFixed(2);
+      ids.hedoDyscontrol.textContent = dyscontrol.toFixed(2);
+
+      let interpretation = 'Puntajes bajos no apoyan con fuerza un patrón hedónico dominante.';
+      if(total >= 2.5 || dyscontrol >= 2.5 || wanting >= 2.5){
+        interpretation = 'El perfil sugiere reforzar la sospecha de sobreingesta hedónica, especialmente si coincide con craving, pérdida de control o ingesta emocional en la entrevista clínica.';
+      }
+      ids.hedoInterpretation.textContent = interpretation;
+
+      return { total, wanting, liking, dyscontrol };
+    }
+
     function suggestPhenotype(){
       const p1=radioValue('phen1'), p2=radioValue('phen2'), p3=radioValue('phen3'), p4=radioValue('phen4'), p5=radioValue('phen5');
+      const hedo = calculateHedoQ();
+      const hedoSuggests = hedo.total >= 2.5 || hedo.dyscontrol >= 2.5 || hedo.wanting >= 2.5;
       let code='6', label='Fenotipo 6 - Obesidad “pura”';
       if(p1){code='1';label='Fenotipo 1 - Cardiometabólico'}
-      if(p5){code='5';label='Fenotipo 5 - Fenotipo hedónico / conducta alimentaria disfuncional'}
+      if(p5 || hedoSuggests){code='5';label='Fenotipo 5 - Fenotipo hedónico / conducta alimentaria disfuncional'}
       if(p3){code='3';label='Fenotipo 3 - MASLD / disfunción hepática'}
       if(p4){code='4';label='Fenotipo 4 - Síndrome de Apnea Obstructiva del Sueño / respiratorio'}
       if(p2){code='2';label='Fenotipo 2 - Enfermedad cardiovascular establecida'}
@@ -381,6 +469,7 @@
       }
 
       const priority=computePriorityScore(imc,eoss,sb);
+      const hedo = calculateHedoQ();
       const goals = updateWeightGoals();
 
       if(imc >= 27 && imc < 30 && ids.comorb.value === 'no'){
@@ -479,6 +568,7 @@
       } else {
         ids.expectedLossMetric.textContent = '--';
       }
+      if((hedo.total >= 2.5 || hedo.dyscontrol >= 2.5 || hedo.wanting >= 2.5) && effectivePhenotype === '5') rationale.push(`HEDO-Q con total ${hedo.total.toFixed(2)}, wanting ${hedo.wanting.toFixed(2)} y dyscontrol ${hedo.dyscontrol.toFixed(2)}: esto refuerza el componente hedónico del cuadro.`);
       if(eoss==='3') rationale.push('EOSS 3: amerita pensar en manejo compartido o derivación por complejidad clínica.');
       if(ess!==null && ess>=11 && sb>=3) rationale.push(`ESS ${ess}: somnolencia diurna excesiva que refuerza la sospecha clínica de Síndrome de Apnea Obstructiva del Sueño.`);
       rationale.push('La obesidad es una enfermedad crónica, progresiva y multifactorial que requiere abordaje integral.');
@@ -503,7 +593,7 @@ Elegibilidad farmacológica: ${eligible ? 'sí' : 'no'}.
 Fenotipo sugerido: ${phenotypeLabel}.
 EOSS: ${eoss}.
 STOP-BANG: ${sb} (${ids.saosMetric.textContent}).
-ESS: ${ess===null ? 'no capturado' : ess}.
+HEDO-Q: total ${hedo.total.toFixed(2)}, wanting ${hedo.wanting.toFixed(2)}, liking ${hedo.liking.toFixed(2)}, dyscontrol ${hedo.dyscontrol.toFixed(2)}.\nESS: ${ess===null ? 'no capturado' : ess}.
 Score combinado de prioridad: ${priority.total.toFixed(1)} (${priority.level}).
 Tratamiento sugerido: ${drug}.
 Alternativa: ${alternative}.
@@ -553,10 +643,16 @@ Esto se logra con alimentación estructurada, ejercicio progresivo, buen sueño,
       ids.doseBox.innerHTML='<div class="small">Todavía sin calcular.</div>';
       ids.noteOutput.value='';
       ids.imc.value='';
+      [1,2,3,4,5,6].forEach(i => document.getElementById(`hedo${i}`).value = '0');
+      ids.hedoTotal.textContent='0.00';
+      ids.hedoWanting.textContent='0.00';
+      ids.hedoLiking.textContent='0.00';
+      ids.hedoDyscontrol.textContent='0.00';
+      ids.hedoInterpretation.textContent='Sin datos suficientes para interpretar aún.';
     }
 
     function fillDemo(){
-      ids.edad.value=56; ids.sexo.value='m'; ids.peso.value=112; ids.talla.value=1.72; ids.cintura.value=118; ids.cuello.value=43; ids.hta.value='si'; ids.comorb.value='si'; ids.ess.value=13;
+      ids.edad.value=56; ids.sexo.value='m'; ids.peso.value=112; ids.talla.value=1.72; ids.cintura.value=118; ids.cuello.value=43; ids.hta.value='si'; ids.comorb.value='si'; ids.ess.value=13; ids.hedo1.value='3'; ids.hedo2.value='3'; ids.hedo3.value='4'; ids.hedo4.value='3'; ids.hedo5.value='4'; ids.hedo6.value='3';
       setRadio('phen1',1); setRadio('phen2',0); setRadio('phen3',0); setRadio('phen4',1); setRadio('phen5',0);
       setRadio('q1',1); setRadio('q2',1); setRadio('q3',1); setRadio('q4',1);
       const e2=document.querySelector('input[name="eossq"][value="2"]'); if(e2) e2.checked=true; ids.eossManual.value='2';
@@ -573,7 +669,7 @@ Esto se logra con alimentación estructurada, ejercicio progresivo, buen sueño,
     document.getElementById('doctorModeBtn').addEventListener('click',()=>{ currentMode='doctor'; document.getElementById('doctorModeBtn').classList.add('active','doctor-red'); document.getElementById('patientModeBtn').classList.remove('active'); buildRecommendation(); });
     document.getElementById('patientModeBtn').addEventListener('click',()=>{ currentMode='patient'; document.getElementById('patientModeBtn').classList.add('active'); document.getElementById('doctorModeBtn').classList.remove('active'); buildRecommendation(); });
     ['edad','peso','talla','cuello','ess'].forEach(id=>ids[id].addEventListener('input',recalcLite));
-    ['sexo','hta','comorb','eossManual'].forEach(id=>ids[id].addEventListener('change',recalcLite));
+    ['sexo','hta','comorb','eossManual','hedo1','hedo2','hedo3','hedo4','hedo5','hedo6'].forEach(id=>ids[id].addEventListener('change',recalcLite));
     document.querySelectorAll('input[type="radio"]').forEach(el=>el.addEventListener('change',recalcLite));
 
     resetAll();
